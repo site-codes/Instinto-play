@@ -1,0 +1,234 @@
+  
+  .erroB{cursor:pointer; font-size:12px}
+  .erroB button:before{content:"\e002"!important}
+    .erroEp{
+    position: fixed;
+    top:0;
+    height:100%;
+    left:0;
+    width:100%;
+    z-index:10;
+    display: none;
+    justify-content: center;
+    align-items: center;
+  }
+  .erroEp:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width:100%;
+    height: 100%;
+    display: flex;
+    background: var(--contentB);
+    opacity: .9;
+    z-index: -1;
+    pointer-events:none
+}
+
+  .erroEp iframe{
+    background: white;
+    border-radius:20px;
+    overflow: hidden;
+    max-width:80%;
+  }
+  
+  
+.temporadas * {
+  line-height: normal !important;
+}
+
+  
+  .h2{color: var(--linkC); margin-bottom:10px;opacity: 0.89;}
+  
+  .cast-container {
+    display: flex;
+    gap: 20px;
+    padding:0;
+    padding-bottom:20px;
+    overflow:auto;
+margin-bottom:20px;
+  }
+
+  
+  .cast-container::-webkit-scrollbar{display:;}
+
+  .cast-containewebkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+  .cast-container::-webkit-scrollbar-thumb {
+  background-color: var(--linkD);
+  border-radius: 10px;
+}
+
+
+  .cast-item {
+    border-radius: 10px;
+    min-width:140px;
+    max-width:140px;
+    height:250px;
+    background: var(--contentB);
+    color:var(--linkC);
+    overflow:hidden;
+    pointer-events:none
+  }
+  .cast-item img {
+    width: 100%;
+    object-fit: cover;
+    height: 170px;
+  }
+  .cast-item div{
+    display: flex;
+    flex-direction:column;
+    padding:10px
+  }
+  .character-name {
+    font-weight: 500;
+    font-size:13px;
+  }
+
+  .actor-name {
+    font-size:12px;
+    opacity:0.6;
+  }
+  
+  
+  
+  
+  
+  @media screen and (max-width: 1100px){
+    
+  .cast-container::-webkit-scrollbar,
+    .todasimgs{display:none!important}
+    
+  }
+  
+@media screen and (min-width: 1100px) {
+    .barra {
+        width: 30%!important;
+    }
+  .temporadas{
+  width:70%!important}
+  
+  
+  .money{
+gap:40px;}
+  
+  .barra-container{display:flex;}
+  
+  
+  
+}
+  
+.Play:after{content:attr(data-text)}
+.Diretor:before{content:"\e7ef"!important}
+.Roteiro:before{content:"\e7ef"!important}
+.Produtores:before{content:"\f233"!important}
+
+.textB h8{opacity:0.6; font-size:15px;}
+.textB span{flex-wrap: wrap!important;flex-direction: column;}
+
+  .money{
+order:5;display:flex;  gap:10px;flex-wrap:wrap;
+  margin:10px 0 20px 0}
+  
+  .money span{display: flex;gap:10px
+}
+  
+  .money h6{font-weight:600; font-size:15px; opacity:0.8}
+   .money h8{font-weight:400; font-size:14px; opacity:0.6}
+
+.pmovie{display: flex;gap:10px; order:2; align-items: center;}
+#mStatus{background: var(--corB3); color: var(--linkA)}
+.pmovie span{padding: 3px 10px; border-radius:15px; background: rgba(255,255,255,0.06);position: relative}
+.pmovie span:before{font-family:"Material Symbols Outlined";color: var(--cor2); font-size:20px; opacity:0.8; margin-right:10px}
+
+.pmovie .dets{display: flex;opacity: 0.8}
+.pmovie .dets span{background: transparent;display: flex; align-items: center;}
+.pmovie .dets span[data-text="time"]:before{content:"\ea5d"}
+.pmovie .dets span[data-text="sub"]:before{content:"\e01c"}
+.pmovie .dets span[data-text="date"]:before{content:"\f238"}
+.pmovie .dets span[data-text="estudio"]:before{content:"\f40f"}
+.pmovie .dets span[data-text="estaçao"]:before{content:"\e430"}
+.pmovie .dets span[data-text="adm"]:before{content:"\e7fd"}
+
+
+.pmovie .dets span:after{padding:2px 10px; border-radius:5px; background:rgba(0,0,0,0.5);font-size:12px;position: absolute; top: -30px; left:30%; height:auto; white-space: nowrap;display:none; z-index:3}
+.pmovie .dets span:hover:after{display: flex!important}
+.pmovie .dets span[data-text="time"]:after{content:"Duração"}
+.pmovie .dets span[data-text="sub"]:after{content:"Tipo"}
+.pmovie .dets span[data-text="date"]:after{content:"Data de Lançamento"}
+.pmovie .dets span[data-text="estudio"]:after{content:"Estudio"}
+.pmovie .dets span[data-text="estaçao"]:after{content:"Estação"}
+.pmovie .dets span[data-text="adm"]:after{content:"Adm que fez upload"}
+
+
+#player{border-radius:20px; overflow:hidden}
+
+
+@media screen and (max-width:800px){
+.Play:after{content:"Download"}
+}
+@media screen and (max-width:1100px){
+.pmovie{margin-top:20px;
+flex-wrap: wrap;}
+
+.dets{
+  flex-basis:100%;overflow:auto; gap:20px}
+
+.dets::-webkit-scrollbar{display:none}
+
+.dets span {
+min-width: auto;
+background: var(--bodyD)!important;
+pointer-events: none;
+border-radius: 5px;
+height: 70px;
+padding: 10px;
+padding-top:40px;
+display: flex;
+align-items: flex-end;
+justify-content: center;
+box-sizing: border-box;
+}
+.dets span[data-text="estudio"]{min-width:120px}
+
+.dets span:before {
+position: absolute;
+top: 10px;
+width: calc(100% - 20px);
+left: 10px;
+background: rgba(0, 0, 0, 0.2);
+color: var(--cor2);
+height: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 2px 10px !important;
+font-size: 10px;
+font-weight: 500;
+border-radius: 5px;
+}
+.dets span:before{font-family:unset!important}
+.dets span[data-text="time"]:before{content:"Duração"!important}
+.dets span[data-text="sub"]:before{content:"Tipo"!important}
+.dets span[data-text="date"]:before{content:"Lançamento"!important}
+.dets span[data-text="estudio"]:before{content:"Estudio"!important}
+.dets span[data-text="estaçao"]:before{content:"Estação"!important}
+.dets span[data-text="adm"]:before{content:"Adm"!important}
+
+      .dets span h8{white-space:nowrap!important; display: flex; align-items: center}
+
+.dets span h8:before{font-family:"Material Symbols Outlined";
+margin-right:10px;
+font-size: 18px;color: var(--cor2);}
+
+.dets span[data-text="time"] h8:before{content:"\ea5d"}
+.dets span[data-text="sub"] h8:before{content:"\e01c"}
+.dets span[data-text="date"] h8:before{content:"\f238"}
+.dets span[data-text="estudio"] h8:before{content:"\e01c"}
+.dets span[data-text="estaçao"] h8:before{content:"\e430"}
+.dets span[data-text="adm"] h8:before{content:"\e7fd"}
+
+.temporadas{padding:0 10px!important}
+}
