@@ -1,140 +1,338 @@
-const API_KEY = '2018cef294a4077a7c4ab5a06a153826'; 
-const BASE_URL = 'https://api.themoviedb.org/3';
-
-const genreTranslation = {
-    "Action": "Ação",
-    "Adventure": "Aventura",
-    "Animation": "Animação",
-    "Comedy": "Comédia",
-    "Crime": "Crime",
-    "Documentary": "Documentário",
-    "Drama": "Drama",
-    "Family": "Família",
-    "Fantasy": "Fantasia",
-    "History": "História",
-    "Horror": "Terror",
-    "Music": "Música",
-    "Mystery": "Mistério",
-    "Romance": "Romance",
-    "Science Fiction": "Ficção Científica",
-    "TV Movie": "Filme para TV",
-    "Thriller": "Suspense",
-    "War": "Guerra",
-    "Western": "Faroeste",
-    "Kids": "Infantil",
-    "Action & Adventure": "Ação & Aventura",
-    "Sci-Fi & Fantasy": "Ficção Científica & Fantasia",
-    "Ficção científica": "Ficção Científica"
-};
-
-function getQueryParams() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-        id: params.get('data-id')
-    };
-}
-
-async function fetchMovieDetails(id) {
-    const response = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=pt-BR&append_to_response=credits`);
-    return await response.json();
-}
-
-
-async function loadMovieDetails() {
-    const { id } = getQueryParams();
-    const details = await fetchMovieDetails(id);
-
-    // Exibindo detalhes do filme
-    document.getElementById('filme-title').innerText = details.title;
-    document.getElementById('poster').src = `https://image.tmdb.org/t/p/w500${details.poster_path}`;
-    document.getElementById('poster-link').value = `https://image.tmdb.org/t/p/w500${details.poster_path}`; 
-
-    document.getElementById('title').value = details.title;
-    document.getElementById('original-title').value = details.original_title;
-    document.getElementById('overview').value = details.overview;
-    document.getElementById('genres').value = translateGenres(details.genres.map(g => g.name));
-    document.getElementById('release').value = details.release_date;
-    document.getElementById('status').value = details.status === "Released" ? "Completo" : details.status === "In Production" ? "Em Pausa" : "Lançamento";
-    document.getElementById('rating').value = (Math.round(details.vote_average * 10) / 10).toFixed(1); 
-    document.getElementById('duration').value = details.runtime ? `${details.runtime} min` : ""; 
-    document.getElementById('age-rating').value = details.adult ? "18+" : "Livre";
-    document.getElementById('animeStudio').value = details.production_companies[0]?.name || '';
-
-
-
-    // Obtendo diretor e roteirista
-    const director = details.credits.crew.find(member => member.job === "Director");
-    const writer = details.credits.crew.find(member => member.job === "Writer");
-    document.getElementById('director').value = director ? director.name : ""; 
-    document.getElementById('writer').value = writer ? writer.name : ""; 
-
-    document.getElementById('producers').value = details.production_companies.length > 0 ? details.production_companies.map(pc => pc.name).join(', ') : ""; 
-
-
-    /*
-    // Preenchendo o elenco automaticamente
-    const castContainer = document.getElementById('cast-container');
-    castContainer.innerHTML = '';
-    
-
-    details.credits.cast.forEach(member => {
-        const castMemberDiv = document.createElement('div');
-        castMemberDiv.classList.add('cast-member');
-
-        const profileImageUrl = member.profile_path ? `https://image.tmdb.org/t/p/w500${member.profile_path}` : '';
-
-        castMemberDiv.innerHTML = `
-            <div class="cast">
-                <label>Imagem:</label>
-                <input type="url" value="${profileImageUrl}" placeholder="URL da imagem" />
-                <label>Nome do Ator/Atriz:</label>
-                <input type="text" value="${member.name}" />
-                <label>Personagem:</label>
-                <input type="text" value="${member.character}" />
-            </div>
-        `;
-        castContainer.appendChild(castMemberDiv);
-    });*/
-
-    // Orçamento e Receita
-    document.getElementById('budget').value = details.budget ? `R$ ${details.budget.toLocaleString('pt-BR')}` : "";
-    document.getElementById('revenue').value = details.revenue ? `R$ ${details.revenue.toLocaleString('pt-BR')}` : "";
-    document.getElementById('country').value = details.origin_country.join(', ');
-
-
-    updatePageLink();
-    updateTitlePlayerMovie();
-}
-
-function updateTitle() {
-    const newTitle = document.getElementById('title').value;
-    document.getElementById('filme-title').innerText = newTitle; 
-}
-
-// atualizar poster
-function updatePoster() {
-    const posterLink = document.getElementById('poster-link').value;
-    document.getElementById('poster').src = posterLink;
-}
-
-// Nota com '.'
-function formatRating() {
-    const ratingInput = document.getElementById('rating');
-    const ratingValue = parseFloat(ratingInput.value);
-    if (ratingValue < 0 || ratingValue > 10) {
-        ratingInput.value = ratingValue < 0 ? 0 : 10; 
+const _0x1425ba = _0x3f5b;
+(function (_0x1a3cea, _0xc6ad0b) {
+    const _0x5623fd = _0x3f5b, _0x55f468 = _0x1a3cea();
+    while (!![]) {
+        try {
+            const _0x402ea5 = parseInt(_0x5623fd(0x1d2)) / (0x24b * -0x5 + -0x1474 + -0x1fec * -0x1) + -parseInt(_0x5623fd(0x21b)) / (-0x3aa * -0x5 + 0x24b + -0x149b * 0x1) + -parseInt(_0x5623fd(0x1a0)) / (0x1be * 0xd + 0x7 * 0x511 + -0x192 * 0x25) * (parseInt(_0x5623fd(0x226)) / (0x2089 * -0x1 + -0x19e4 + 0x3a71)) + parseInt(_0x5623fd(0x229)) / (0x3a * 0x2c + -0x1 * 0x1ba2 + 0x11af) + parseInt(_0x5623fd(0x1c8)) / (0x1 * -0x6b7 + 0x7 * 0x1cd + -0x2 * 0x2ef) + -parseInt(_0x5623fd(0x208)) / (-0x2 * -0x44c + 0xf4 * 0x10 + -0x367 * 0x7) * (-parseInt(_0x5623fd(0x1b5)) / (-0x1203 + 0x1e * -0x136 + 0x365f)) + parseInt(_0x5623fd(0x22f)) / (-0x92 * -0x1f + 0x1 * 0x2501 + -0x1 * 0x36a6) * (parseInt(_0x5623fd(0x245)) / (-0x70e * -0x4 + 0x8be + -0x24ec));
+            if (_0x402ea5 === _0xc6ad0b)
+                break;
+            else
+                _0x55f468['push'](_0x55f468['shift']());
+        } catch (_0x3195c8) {
+            _0x55f468['push'](_0x55f468['shift']());
+        }
     }
+}(_0x405c, 0xf2f0b + -0x127d * -0x65 + -0xb4ee3));
+const API_KEY = _0x1425ba(0x1cb) + _0x1425ba(0x1ab) + _0x1425ba(0x1c4) + '26', BASE_URL = _0x1425ba(0x1b1) + _0x1425ba(0x1ed) + _0x1425ba(0x1c6), genreTranslation = {
+        'Action': _0x1425ba(0x1bd),
+        'Adventure': _0x1425ba(0x220),
+        'Animation': _0x1425ba(0x1d6),
+        'Comedy': _0x1425ba(0x22a),
+        'Crime': _0x1425ba(0x20b),
+        'Documentary': _0x1425ba(0x1fe) + 'io',
+        'Drama': _0x1425ba(0x19f),
+        'Family': _0x1425ba(0x1af),
+        'Fantasy': _0x1425ba(0x1c7),
+        'History': _0x1425ba(0x236),
+        'Horror': _0x1425ba(0x1cc),
+        'Music': _0x1425ba(0x1b0),
+        'Mystery': _0x1425ba(0x1d3),
+        'Romance': _0x1425ba(0x1d5),
+        'Science\x20Fiction': _0x1425ba(0x22b) + _0x1425ba(0x233),
+        'TV\x20Movie': _0x1425ba(0x21d) + _0x1425ba(0x1fb),
+        'Thriller': _0x1425ba(0x1c5),
+        'War': _0x1425ba(0x209),
+        'Western': _0x1425ba(0x23e),
+        'Kids': _0x1425ba(0x1b7),
+        'Action\x20&\x20Adventure': _0x1425ba(0x241) + _0x1425ba(0x218),
+        'Sci-Fi\x20&\x20Fantasy': _0x1425ba(0x22b) + _0x1425ba(0x20c) + _0x1425ba(0x1c7),
+        'Ficção\x20científica': _0x1425ba(0x22b) + _0x1425ba(0x233)
+    };
+function getQueryParams() {
+    const _0x6bbb8 = _0x1425ba, _0xb01344 = { 'IrccY': _0x6bbb8(0x1ea) }, _0x2c822c = new URLSearchParams(window[_0x6bbb8(0x1ad)][_0x6bbb8(0x1f2)]);
+    return { 'id': _0x2c822c[_0x6bbb8(0x1e9)](_0xb01344[_0x6bbb8(0x1e8)]) };
 }
-
-
-// titulo  dentro do player
+async function fetchMovieDetails(_0x3da433) {
+    const _0x1abfbb = _0x1425ba, _0x35f8e9 = {
+            'wbymv': function (_0x390629, _0x43c386) {
+                return _0x390629(_0x43c386);
+            }
+        }, _0x122293 = await _0x35f8e9[_0x1abfbb(0x201)](fetch, BASE_URL + _0x1abfbb(0x232) + _0x3da433 + _0x1abfbb(0x1e4) + API_KEY + (_0x1abfbb(0x20a) + _0x1abfbb(0x215) + _0x1abfbb(0x1bf) + _0x1abfbb(0x21c) + 'ts'));
+    return await _0x122293[_0x1abfbb(0x21f)]();
+}
+async function loadMovieDetails() {
+    const _0x37a8a8 = _0x1425ba, _0x3427e0 = {
+            'hyKKC': function (_0x26ef73) {
+                return _0x26ef73();
+            },
+            'kOGYr': function (_0x8cbf4c, _0x118e0a) {
+                return _0x8cbf4c(_0x118e0a);
+            },
+            'jbNYH': _0x37a8a8(0x20f) + 'e',
+            'PsJiY': _0x37a8a8(0x222),
+            'UKBrY': _0x37a8a8(0x1bb) + 'k',
+            'DYJnA': _0x37a8a8(0x1ae),
+            'kJqvk': _0x37a8a8(0x1a3) + _0x37a8a8(0x1df),
+            'dOYiL': _0x37a8a8(0x225),
+            'lnsfC': _0x37a8a8(0x1d4),
+            'EkjLt': _0x37a8a8(0x1fd),
+            'jZcIF': _0x37a8a8(0x1b4),
+            'QHNZK': function (_0x2ff7d5, _0xdc2e3d) {
+                return _0x2ff7d5 === _0xdc2e3d;
+            },
+            'xujos': _0x37a8a8(0x1eb),
+            'VcihG': _0x37a8a8(0x1f8),
+            'gHDvz': function (_0x399edd, _0x4eb0a8) {
+                return _0x399edd === _0x4eb0a8;
+            },
+            'uTbOA': _0x37a8a8(0x1a2) + _0x37a8a8(0x1e2),
+            'hFBkM': _0x37a8a8(0x202),
+            'NSkBQ': _0x37a8a8(0x1e5),
+            'IPtlx': _0x37a8a8(0x22e),
+            'xKptO': function (_0x3f42f8, _0x42e4b4) {
+                return _0x3f42f8 / _0x42e4b4;
+            },
+            'ONRPS': function (_0x5e923e, _0x4d69fe) {
+                return _0x5e923e * _0x4d69fe;
+            },
+            'MjLiR': _0x37a8a8(0x1b8),
+            'whDKM': _0x37a8a8(0x235),
+            'XzqGg': _0x37a8a8(0x23f),
+            'iGmtA': _0x37a8a8(0x1e0),
+            'QEKmI': _0x37a8a8(0x23c) + 'o',
+            'nONlg': _0x37a8a8(0x23d),
+            'CiMdj': _0x37a8a8(0x1a1),
+            'jsXAW': _0x37a8a8(0x1b6),
+            'ShUyi': function (_0x29856b, _0x16ffaa) {
+                return _0x29856b > _0x16ffaa;
+            },
+            'qDwqU': _0x37a8a8(0x1b9),
+            'WUHQl': _0x37a8a8(0x20d),
+            'bbwjj': _0x37a8a8(0x228),
+            'VAoxi': _0x37a8a8(0x1b2),
+            'NwMmw': function (_0x32f78d) {
+                return _0x32f78d();
+            },
+            'lUfjD': function (_0x31352d) {
+                return _0x31352d();
+            }
+        }, {id: _0xa79ca2} = _0x3427e0[_0x37a8a8(0x1f1)](getQueryParams), _0x3aafdd = await _0x3427e0[_0x37a8a8(0x1ba)](fetchMovieDetails, _0xa79ca2);
+    document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x19b)])[_0x37a8a8(0x214)] = _0x3aafdd[_0x37a8a8(0x1ae)], document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x1db)])[_0x37a8a8(0x213)] = _0x37a8a8(0x1fa) + _0x37a8a8(0x20e) + _0x37a8a8(0x1d0) + '0' + _0x3aafdd[_0x37a8a8(0x1c3) + 'h'], document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x1e7)])[_0x37a8a8(0x1cd)] = _0x37a8a8(0x1fa) + _0x37a8a8(0x20e) + _0x37a8a8(0x1d0) + '0' + _0x3aafdd[_0x37a8a8(0x1c3) + 'h'], document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x21e)])[_0x37a8a8(0x1cd)] = _0x3aafdd[_0x37a8a8(0x1ae)], document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x1c1)])[_0x37a8a8(0x1cd)] = _0x3aafdd[_0x37a8a8(0x238) + _0x37a8a8(0x1df)], document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x19e)])[_0x37a8a8(0x1cd)] = _0x3aafdd[_0x37a8a8(0x225)], document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x1ee)])[_0x37a8a8(0x1cd)] = _0x3427e0[_0x37a8a8(0x1ba)](translateGenres, _0x3aafdd[_0x37a8a8(0x1d4)][_0x37a8a8(0x1bc)](_0x43924a => _0x43924a[_0x37a8a8(0x1da)])), document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x210)])[_0x37a8a8(0x1cd)] = _0x3aafdd[_0x37a8a8(0x1ac) + 'te'], document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x1d1)])[_0x37a8a8(0x1cd)] = _0x3427e0[_0x37a8a8(0x1f9)](_0x3aafdd[_0x37a8a8(0x1b4)], _0x3427e0[_0x37a8a8(0x1f0)]) ? _0x3427e0[_0x37a8a8(0x1f5)] : _0x3427e0[_0x37a8a8(0x206)](_0x3aafdd[_0x37a8a8(0x1b4)], _0x3427e0[_0x37a8a8(0x1ec)]) ? _0x3427e0[_0x37a8a8(0x1c2)] : _0x3427e0[_0x37a8a8(0x1a7)], document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x200)])[_0x37a8a8(0x1cd)] = _0x3427e0[_0x37a8a8(0x1a5)](Math[_0x37a8a8(0x1a9)](_0x3427e0[_0x37a8a8(0x1de)](_0x3aafdd[_0x37a8a8(0x1f7) + 'ge'], -0x2038 * -0x1 + 0x2 * 0xa43 + -0x34b4)), -0x14 * -0x7d + -0x1c07 + 0x124d)[_0x37a8a8(0x1ff)](0x2ee + -0xad9 + 0x7ec), document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x1ca)])[_0x37a8a8(0x1cd)] = _0x3aafdd[_0x37a8a8(0x1dc)] ? _0x3aafdd[_0x37a8a8(0x1dc)] + _0x37a8a8(0x242) : '', document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x1c9)])[_0x37a8a8(0x1cd)] = _0x3aafdd[_0x37a8a8(0x231)] ? _0x3427e0[_0x37a8a8(0x224)] : _0x3427e0[_0x37a8a8(0x1fc)], document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x1a6)])[_0x37a8a8(0x1cd)] = _0x3aafdd[_0x37a8a8(0x22c) + _0x37a8a8(0x207)][0xf89 + -0xbed + -0x39c]?.[_0x37a8a8(0x1da)] || '';
+    const _0x5d9f98 = _0x3aafdd[_0x37a8a8(0x22d)][_0x37a8a8(0x1f3)][_0x37a8a8(0x244)](_0x58f472 => _0x58f472[_0x37a8a8(0x217)] === _0x37a8a8(0x205)), _0x4a4ec7 = _0x3aafdd[_0x37a8a8(0x22d)][_0x37a8a8(0x1f3)][_0x37a8a8(0x244)](_0x6206fb => _0x6206fb[_0x37a8a8(0x217)] === _0x37a8a8(0x1be));
+    document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x23b)])[_0x37a8a8(0x1cd)] = _0x5d9f98 ? _0x5d9f98[_0x37a8a8(0x1da)] : '', document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x234)])[_0x37a8a8(0x1cd)] = _0x4a4ec7 ? _0x4a4ec7[_0x37a8a8(0x1da)] : '', document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x1ef)])[_0x37a8a8(0x1cd)] = _0x3427e0[_0x37a8a8(0x223)](_0x3aafdd[_0x37a8a8(0x22c) + _0x37a8a8(0x207)][_0x37a8a8(0x1d8)], -0x2c0 + 0x265c + 0x239c * -0x1) ? _0x3aafdd[_0x37a8a8(0x22c) + _0x37a8a8(0x207)][_0x37a8a8(0x1bc)](_0x2f3d01 => _0x2f3d01[_0x37a8a8(0x1da)])[_0x37a8a8(0x21a)](',\x20') : '', document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x1ce)])[_0x37a8a8(0x1cd)] = _0x3aafdd[_0x37a8a8(0x1b9)] ? _0x37a8a8(0x216) + _0x3aafdd[_0x37a8a8(0x1b9)][_0x37a8a8(0x243) + _0x37a8a8(0x23a)](_0x3427e0[_0x37a8a8(0x1e1)]) : '', document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x1dd)])[_0x37a8a8(0x1cd)] = _0x3aafdd[_0x37a8a8(0x228)] ? _0x37a8a8(0x216) + _0x3aafdd[_0x37a8a8(0x228)][_0x37a8a8(0x243) + _0x37a8a8(0x23a)](_0x3427e0[_0x37a8a8(0x1e1)]) : '', document[_0x37a8a8(0x1a4) + _0x37a8a8(0x240)](_0x3427e0[_0x37a8a8(0x1d9)])[_0x37a8a8(0x1cd)] = _0x3aafdd[_0x37a8a8(0x1cf) + _0x37a8a8(0x203)][_0x37a8a8(0x21a)](',\x20'), _0x3427e0[_0x37a8a8(0x1c0)](updatePageLink), _0x3427e0[_0x37a8a8(0x1aa)](updateTitlePlayerMovie);
+}
+function _0x3f5b(_0x3e8d2b, _0x2c46ac) {
+    const _0x3f834e = _0x405c();
+    return _0x3f5b = function (_0xf81d0e, _0x390a79) {
+        _0xf81d0e = _0xf81d0e - (0x15 * -0x68 + -0x3 * -0x2ea + -0x15 * -0x11);
+        let _0x435a72 = _0x3f834e[_0xf81d0e];
+        return _0x435a72;
+    }, _0x3f5b(_0x3e8d2b, _0x2c46ac);
+}
+function updateTitle() {
+    const _0x432d01 = _0x1425ba, _0x294005 = {
+            'WhiQW': _0x432d01(0x1ae),
+            'GkrYE': _0x432d01(0x20f) + 'e'
+        }, _0x33e8e4 = document[_0x432d01(0x1a4) + _0x432d01(0x240)](_0x294005[_0x432d01(0x1a8)])[_0x432d01(0x1cd)];
+    document[_0x432d01(0x1a4) + _0x432d01(0x240)](_0x294005[_0x432d01(0x227)])[_0x432d01(0x214)] = _0x33e8e4;
+}
+function updatePoster() {
+    const _0x53a4ed = _0x1425ba, _0x46ba45 = {
+            'eXBCs': _0x53a4ed(0x1bb) + 'k',
+            'OZBZV': _0x53a4ed(0x222)
+        }, _0x154199 = document[_0x53a4ed(0x1a4) + _0x53a4ed(0x240)](_0x46ba45[_0x53a4ed(0x211)])[_0x53a4ed(0x1cd)];
+    document[_0x53a4ed(0x1a4) + _0x53a4ed(0x240)](_0x46ba45[_0x53a4ed(0x1f6)])[_0x53a4ed(0x213)] = _0x154199;
+}
+function formatRating() {
+    const _0x1a8aa3 = _0x1425ba, _0xa654f = {
+            'zuQkT': _0x1a8aa3(0x22e),
+            'GLQyE': function (_0x128842, _0x1bc4ae) {
+                return _0x128842(_0x1bc4ae);
+            },
+            'dOzRU': function (_0x1c7337, _0xcdff2e) {
+                return _0x1c7337 < _0xcdff2e;
+            },
+            'iInyV': function (_0x33d4c2, _0x7eb9dd) {
+                return _0x33d4c2 > _0x7eb9dd;
+            }
+        }, _0x5a8cc3 = document[_0x1a8aa3(0x1a4) + _0x1a8aa3(0x240)](_0xa654f[_0x1a8aa3(0x1e6)]), _0x3bb353 = _0xa654f[_0x1a8aa3(0x237)](parseFloat, _0x5a8cc3[_0x1a8aa3(0x1cd)]);
+    (_0xa654f[_0x1a8aa3(0x1b3)](_0x3bb353, -0x1a89 * 0x1 + -0xbcd * 0x1 + -0x7 * -0x57a) || _0xa654f[_0x1a8aa3(0x221)](_0x3bb353, -0x138b * -0x1 + 0xcd6 + 0x11 * -0x1e7)) && (_0x5a8cc3[_0x1a8aa3(0x1cd)] = _0xa654f[_0x1a8aa3(0x1b3)](_0x3bb353, 0x5f9 + 0xf95 * 0x1 + -0x158e) ? 0x2679 + -0x2557 + -0x122 : -0x2521 + 0x170 + 0x23bb);
+}
 function updateTitlePlayerMovie() {
-    const title = document.getElementById('title').value;
-    const subdub = document.getElementById('subdub').value; 
-    const titlePlayerMovie = `${title} - ${subdub}`;
-    document.getElementById('titlePlayerMovie').value = titlePlayerMovie;
+    const _0x55d3a3 = _0x1425ba, _0x1164ff = {
+            'BqwXI': _0x55d3a3(0x1ae),
+            'kBGYJ': _0x55d3a3(0x19d),
+            'eyLPr': _0x55d3a3(0x19c) + _0x55d3a3(0x1d7)
+        }, _0x55be4f = document[_0x55d3a3(0x1a4) + _0x55d3a3(0x240)](_0x1164ff[_0x55d3a3(0x239)])[_0x55d3a3(0x1cd)], _0x222817 = document[_0x55d3a3(0x1a4) + _0x55d3a3(0x240)](_0x1164ff[_0x55d3a3(0x204)])[_0x55d3a3(0x1cd)], _0x2cbc72 = _0x55be4f + _0x55d3a3(0x1e3) + _0x222817;
+    document[_0x55d3a3(0x1a4) + _0x55d3a3(0x240)](_0x1164ff[_0x55d3a3(0x1f4)])[_0x55d3a3(0x1cd)] = _0x2cbc72;
 }
-
-document.getElementById('subdub').addEventListener('input', updateTitlePlayerMovie);
-
-loadMovieDetails();
+function _0x405c() {
+    const _0x34fa0c = [
+        'pt-BR&appe',
+        'R$\x20',
+        'job',
+        'ntura',
+        'stener',
+        'join',
+        '1513038PTkMuq',
+        'onse=credi',
+        'Filme\x20para',
+        'DYJnA',
+        'json',
+        'Aventura',
+        'iInyV',
+        'poster',
+        'ShUyi',
+        'XzqGg',
+        'overview',
+        '4QjuYyb',
+        'GkrYE',
+        'revenue',
+        '1118400kvzKIA',
+        'Comédia',
+        'Ficção\x20Cie',
+        'production',
+        'credits',
+        'rating',
+        '9fBzvOg',
+        'input',
+        'adult',
+        '/movie/',
+        'ntífica',
+        'CiMdj',
+        'age-rating',
+        'História',
+        'GLQyE',
+        'original_t',
+        'BqwXI',
+        'ring',
+        'nONlg',
+        'animeStudi',
+        'director',
+        'Faroeste',
+        '18+',
+        'ById',
+        'Ação\x20&\x20Ave',
+        '\x20min',
+        'toLocaleSt',
+        'find',
+        '7204030HGXLij',
+        'jbNYH',
+        'titlePlaye',
+        'subdub',
+        'dOYiL',
+        'Drama',
+        '2340678SWKsks',
+        'writer',
+        'In\x20Product',
+        'original-t',
+        'getElement',
+        'xKptO',
+        'QEKmI',
+        'NSkBQ',
+        'WhiQW',
+        'round',
+        'lUfjD',
+        'a4077a7c4a',
+        'release_da',
+        'location',
+        'title',
+        'Família',
+        'Música',
+        'https://ap',
+        'country',
+        'dOzRU',
+        'status',
+        '56AbvLhd',
+        'producers',
+        'Infantil',
+        'duration',
+        'budget',
+        'kOGYr',
+        'poster-lin',
+        'map',
+        'Ação',
+        'Writer',
+        'nd_to_resp',
+        'NwMmw',
+        'kJqvk',
+        'hFBkM',
+        'poster_pat',
+        'b5a06a1538',
+        'Suspense',
+        'db.org/3',
+        'Fantasia',
+        '4715808bQVQRD',
+        'whDKM',
+        'MjLiR',
+        '2018cef294',
+        'Terror',
+        'value',
+        'qDwqU',
+        'origin_cou',
+        'rg/t/p/w50',
+        'jZcIF',
+        '96571KFFvLa',
+        'Mistério',
+        'genres',
+        'Romance',
+        'Animação',
+        'rMovie',
+        'length',
+        'VAoxi',
+        'name',
+        'PsJiY',
+        'runtime',
+        'bbwjj',
+        'ONRPS',
+        'itle',
+        'Livre',
+        'WUHQl',
+        'ion',
+        '\x20-\x20',
+        '?api_key=',
+        'Lançamento',
+        'zuQkT',
+        'UKBrY',
+        'IrccY',
+        'get',
+        'data-id',
+        'Released',
+        'uTbOA',
+        'i.themovie',
+        'lnsfC',
+        'jsXAW',
+        'xujos',
+        'hyKKC',
+        'search',
+        'crew',
+        'eyLPr',
+        'VcihG',
+        'OZBZV',
+        'vote_avera',
+        'Completo',
+        'QHNZK',
+        'https://im',
+        '\x20TV',
+        'iGmtA',
+        'release',
+        'Documentár',
+        'toFixed',
+        'IPtlx',
+        'wbymv',
+        'Em\x20Pausa',
+        'ntry',
+        'kBGYJ',
+        'Director',
+        'gHDvz',
+        '_companies',
+        '442148aVhRQl',
+        'Guerra',
+        '&language=',
+        'Crime',
+        'ntífica\x20&\x20',
+        'pt-BR',
+        'age.tmdb.o',
+        'filme-titl',
+        'EkjLt',
+        'eXBCs',
+        'addEventLi',
+        'src',
+        'innerText'
+    ];
+    _0x405c = function () {
+        return _0x34fa0c;
+    };
+    return _0x405c();
+}
+document[_0x1425ba(0x1a4) + _0x1425ba(0x240)](_0x1425ba(0x19d))[_0x1425ba(0x212) + _0x1425ba(0x219)](_0x1425ba(0x230), updateTitlePlayerMovie), loadMovieDetails();
