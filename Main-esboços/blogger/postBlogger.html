@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postagem no Blogger</title>
+    <style>
+        /* Estilo personalizado para h8 */
+        #texto {
+            display: flex;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            width: 300px;
+            margin: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Seu elemento h8 (ou h3) com o id 'texto' -->
+<h3 id="texto" onclick="criarPostagemDoTexto()">Aqui está o conteúdo que será postado no Blogger!</h3>
+
+<!-- Área para exibir mensagens de sucesso ou erro -->
+<div id="message" class="message"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    const BLOGGER_ACCESS_TOKEN = 'ya29.a0AeDClZANr-ZTnaTjJN4hTgxinfy3uf821iXfGGftCcs85l3LH60sBM68gF5Ys4fwgMRNs-d_rYiHIUj2QS2ly5eNqqwfJ15ui7E8FfT424W3vFg1jRgUjtKpL1r42ud8E_iQRYpFQBLLZg3oGM0c-HvmoagxsICngS-irjpqaCgYKAcASARMSFQHGX2Mido-0fANZ2HpD4kczySdAHQ0175';
+    const BLOG_ID = '1263645809674600684';
+    const REFRESH_TOKEN = '1//04gk8OXqBEVFSCgYIARAAGAQSNwF-L9IrgVKjUc4SLvo-VRWl2kD2Ood_XFdU7X8WWkjLRbfq4dHsBxYihSC3cy6qY1f4nbx4EVY'; // Token de atualização
+
+    function criarPostagemDoTexto() {
+        // Obtém o conteúdo do <h3> com id 'texto'
+        const conteudoTexto = document.getElementById('texto').innerText;
+
+        // Dados para a postagem no Blogger
+        const postData = {
+            title: 'Postagem a partir do conteúdo de h3',
+            content: `<h3>${conteudoTexto}</h3>`, // Coloca o conteúdo do <h3> como corpo da postagem
+            labels: ['conteudo-dinamico'],
+            status: 'LIVE' // Torna a postagem publicada imediatamente
+        };
+
+        // Mostra a mensagem de carregamento
+        mostrarMensagem('Criando postagem... Aguarde', 'info');
+
+        // Chamada para a API do Blogger para criar a postagem
+        $.ajax({
+            url: `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts/`,
+            type: 'POST',
+            headers: {
+                'Authorization': `Bearer ${BLOGGER_ACCESS_TOKEN}`,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(postData),
+            success: function(response) {
+                mostrarMensagem('Postagem criada com sucesso!', 'success');
+                console.log(response);
+            },
+            error: function(error) {
+                mostrarMensagem('Erro ao criar postagem: ' + (error.responseText || 'Erro desconhecido'), 'error');
+                console.log(error);
+                // Tenta renovar o token caso ocorra um erro de permissão (expiração do token)
+                if (error.status === 403) {
+                    renovarToken();
+                }
+            }
+        });
+    }
+
+    function mostrarMensagem(mensagem, tipo) {
+        const messageDiv = document.getElementById('message');
+        messageDiv.textContent = mensagem;
+        
+        // Define a cor de fundo com base no tipo de mensagem
+        if (tipo === 'success') {
+            messageDiv.style.backgroundColor = '#d4edda';
+            messageDiv.style.borderColor = '#c3e6cb';
+        } else if (tipo === 'error') {
+            messageDiv.style.backgroundColor = '#f8d7da';
+            messageDiv.style.borderColor = '#f5c6cb';
+        } else {
+            messageDiv.style.backgroundColor = '#f4f4f4';
+            messageDiv.style.borderColor = '#ddd';
+        }
+
+        // Exibe a mensagem
+        messageDiv.style.display = 'block';
+    }
+
+    function renovarToken() {
+        const url = 'https://oauth2.googleapis.com/token';
+        const data = {
+            client_id: '24775042559-b1dh5stt5ujskpvhuh2srvn2avgrtf82.apps.googleusercontent.com', // Substitua com o seu Client ID
+            client_secret: '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', // Substitua com o seu Client Secret
+            refresh_token: REFRESH_TOKEN,
+            grant_type: 'refresh_token'
+        };
+
+        $.post(url, data, function(response) {
+            BLOGGER_ACCESS_TOKEN = response.access_token; // Atualiza o token de acesso
+            mostrarMensagem('Token renovado com sucesso!', 'success');
+            console.log("Novo token de acesso:", BLOGGER_ACCESS_TOKEN);
+        }).fail(function(error) {
+            mostrarMensagem('Erro ao renovar o token: ' + (error.responseText || 'Erro desconhecido'), 'error');
+            console.log(error);
+        });
+    }
+</script>
+
+</body>
+</html>

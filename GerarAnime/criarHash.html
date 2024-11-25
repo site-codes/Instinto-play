@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Hash SHA-256</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        /* Estilo básico do corpo */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h1 {
+            color: #4a4a9f;
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+        input[type="text"], input[type="hidden"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+    
+        input[type="text"]:focus, input[type="text"]:hover {
+            border-color: #4a4a9f;
+            outline: none;
+        }
+    
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #4a4a9f;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+    
+        button:hover {
+            background-color: #3c3c7e;
+        }
+    
+        #hashOutput, #infoOutput, #errorOutput {
+            margin-top: 20px;
+            font-size: 1em;
+            padding: 10px;
+            max-width: 400px;
+            text-align: center;
+        }
+    
+        #hashOutput {
+            font-weight: bold;
+            color: #4a4a9f;
+        }
+    
+        #errorOutput {
+            color: red;
+            font-weight: bold;
+        }
+    
+        #whatsappButton {
+            margin-top: 20px;
+            background-color: #25D366;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+    
+        #whatsappButton:hover {
+            background-color: #1d9a50;
+        }
+    </style>
+    
+</head>
+<body>
+
+    <h1>Gerador de CHAVE KEY</h1>
+    
+    <form method="POST" onsubmit="generateHash(); return false;">
+        <input type="hidden" id="publicIp" placeholder="Seu IP público" readonly>
+        <input type="text" id="name" placeholder="Digite o Nome" required>
+        <input type="text" id="domain" placeholder="Digite o Domínio" required>
+        <button type="submit">Gerar CHAVE</button>
+    </form>
+
+    <p id="hashOutput"></p>
+    <div id="infoOutput"></div>
+    <p id="errorOutput" class="error"></p> 
+    <a id="whatsappButton" target="_blank">Compartilhar no WhatsApp</a>
+
+    <script>
+const _0x4b4845 = _0x3e1f;
+(function (_0xc74a6d, _0x1b1ec6) {
+    const _0x13a9b8 = _0x3e1f, _0x3235db = _0xc74a6d();
+    while (!![]) {
+        try {
+            const _0x33e369 = -parseInt(_0x13a9b8(0x141)) / (0x43a * 0x9 + -0x551 * -0x1 + -0x2b5a) + -parseInt(_0x13a9b8(0x17b)) / (-0x124 + 0x253f + 0x1 * -0x2419) * (parseInt(_0x13a9b8(0x184)) / (0x1d7 * 0xd + 0x1 * -0x421 + -0x1 * 0x13c7)) + -parseInt(_0x13a9b8(0x188)) / (-0x1c06 + -0x25d2 + -0x5 * -0xd2c) + -parseInt(_0x13a9b8(0x166)) / (0xb41 + 0x1 * -0xad9 + 0xb * -0x9) + parseInt(_0x13a9b8(0x143)) / (0x11dd + 0x9f * -0x3b + -0x3a * -0x53) + parseInt(_0x13a9b8(0x165)) / (-0x15c6 + 0x1ceb + -0x71e) * (-parseInt(_0x13a9b8(0x16e)) / (0x2137 + 0x27 * -0x34 + -0x1943)) + -parseInt(_0x13a9b8(0x13c)) / (-0x3 * -0xa7c + 0xe07 + -0x2d72) * (-parseInt(_0x13a9b8(0x13d)) / (-0x1e4f + -0xbff + 0x8 * 0x54b));
+            if (_0x33e369 === _0x1b1ec6)
+                break;
+            else
+                _0x3235db['push'](_0x3235db['shift']());
+        } catch (_0x568197) {
+            _0x3235db['push'](_0x3235db['shift']());
+        }
+    }
+}(_0x5986, 0x968a1 + 0x52cd7 + -0x25a * 0x32d));
+function _0x3e1f(_0x29437d, _0x3e7dd8) {
+    const _0x1bc6c5 = _0x5986();
+    return _0x3e1f = function (_0x6d8df2, _0x1515a8) {
+        _0x6d8df2 = _0x6d8df2 - (0xb * -0x368 + -0x1a55 + 0x40f4 * 0x1);
+        let _0x4606d2 = _0x1bc6c5[_0x6d8df2];
+        return _0x4606d2;
+    }, _0x3e1f(_0x29437d, _0x3e7dd8);
+}
+async function getPublicIp() {
+    const _0xff5ed6 = _0x3e1f, _0x44afee = {
+            'AeMkq': function (_0x24e804, _0x570d9f) {
+                return _0x24e804(_0x570d9f);
+            },
+            'IGtKY': _0xff5ed6(0x186) + _0xff5ed6(0x162) + _0xff5ed6(0x169) + _0xff5ed6(0x149),
+            'crBaB': _0xff5ed6(0x168),
+            'yYwce': _0xff5ed6(0x15c) + _0xff5ed6(0x156) + _0xff5ed6(0x14d),
+            'PfcXJ': _0xff5ed6(0x180) + _0xff5ed6(0x139) + _0xff5ed6(0x17c)
+        };
+    try {
+        const _0x56e866 = await _0x44afee[_0xff5ed6(0x142)](fetch, _0x44afee[_0xff5ed6(0x167)]), _0x4914df = await _0x56e866[_0xff5ed6(0x147)]();
+        return document[_0xff5ed6(0x14a) + _0xff5ed6(0x15f)](_0x44afee[_0xff5ed6(0x178)])[_0xff5ed6(0x185)] = _0x4914df['ip'], _0x4914df['ip'];
+    } catch (_0x93e79d) {
+        return console[_0xff5ed6(0x15b)](_0x44afee[_0xff5ed6(0x138)], _0x93e79d), _0x44afee[_0xff5ed6(0x13f)];
+    }
+}
+window[_0x4b4845(0x15e)] = getPublicIp;
+async function generateHash() {
+    const _0xc60daa = _0x4b4845, _0x43ec55 = {
+            'DodVZ': _0xc60daa(0x15a),
+            'HitIm': _0xc60daa(0x16b),
+            'kxzdD': function (_0x132433, _0x5e1b73) {
+                return _0x132433(_0x5e1b73);
+            },
+            'zEJzh': _0xc60daa(0x150) + 't',
+            'KTPPB': _0xc60daa(0x183) + _0xc60daa(0x176) + _0xc60daa(0x134) + _0xc60daa(0x159) + _0xc60daa(0x129) + _0xc60daa(0x163) + _0xc60daa(0x12e),
+            'yZuyK': function (_0x5acc87) {
+                return _0x5acc87();
+            },
+            'FgePG': function (_0x9cf0c2, _0x548fe9) {
+                return _0x9cf0c2 + _0x548fe9;
+            },
+            'CBkod': _0xc60daa(0x137),
+            'rZIhr': _0xc60daa(0x175),
+            'pBboC': _0xc60daa(0x181),
+            'xrEHI': function (_0x36f6d5, _0x399168) {
+                return _0x36f6d5(_0x399168);
+            },
+            'wJdGZ': _0xc60daa(0x182) + _0xc60daa(0x135),
+            'dPYyw': _0xc60daa(0x136)
+        }, _0x107d64 = document[_0xc60daa(0x14a) + _0xc60daa(0x15f)](_0x43ec55[_0xc60daa(0x15d)])[_0xc60daa(0x185)], _0xfb0cd6 = document[_0xc60daa(0x14a) + _0xc60daa(0x15f)](_0x43ec55[_0xc60daa(0x152)])[_0xc60daa(0x185)];
+    if (!_0x43ec55[_0xc60daa(0x132)](validateDomain, _0xfb0cd6)) {
+        document[_0xc60daa(0x14a) + _0xc60daa(0x15f)](_0x43ec55[_0xc60daa(0x17a)])[_0xc60daa(0x161)] = _0x43ec55[_0xc60daa(0x172)];
+        return;
+    } else
+        document[_0xc60daa(0x14a) + _0xc60daa(0x15f)](_0x43ec55[_0xc60daa(0x17a)])[_0xc60daa(0x161)] = '';
+    const _0xcbd491 = await _0x43ec55[_0xc60daa(0x174)](getPublicIp), _0x3c1ccc = _0x43ec55[_0xc60daa(0x17e)](_0x107d64, _0xfb0cd6), _0x32fddb = CryptoJS[_0xc60daa(0x12a)](_0x3c1ccc)[_0xc60daa(0x154)]();
+    document[_0xc60daa(0x14a) + _0xc60daa(0x15f)](_0x43ec55[_0xc60daa(0x14e)])[_0xc60daa(0x161)] = _0xc60daa(0x14f) + '\x20' + _0x32fddb;
+    const _0x51999f = new Date(), _0x31729b = _0xc60daa(0x179) + _0xc60daa(0x144) + _0xc60daa(0x14c) + _0xc60daa(0x13a) + _0xc60daa(0x16d) + _0xc60daa(0x179) + _0xc60daa(0x128) + _0xc60daa(0x187) + _0x107d64 + (_0xc60daa(0x133) + _0xc60daa(0x16f) + _0xc60daa(0x158)) + _0x32fddb + (_0xc60daa(0x133) + _0xc60daa(0x16f) + _0xc60daa(0x151)) + _0xfb0cd6 + (_0xc60daa(0x133) + _0xc60daa(0x16f) + _0xc60daa(0x130) + '\x20') + _0xcbd491 + (_0xc60daa(0x133) + _0xc60daa(0x16f) + _0xc60daa(0x12f) + _0xc60daa(0x17f)) + _0x51999f[_0xc60daa(0x157) + _0xc60daa(0x127)](_0x43ec55[_0xc60daa(0x173)]);
+    document[_0xc60daa(0x14a) + _0xc60daa(0x15f)](_0x43ec55[_0xc60daa(0x17d)])[_0xc60daa(0x170)] = _0x31729b;
+    const _0x4ec7ef = _0xc60daa(0x153) + _0xc60daa(0x16c) + _0xc60daa(0x155) + _0x107d64 + _0xc60daa(0x12d) + _0x32fddb + _0xc60daa(0x189) + _0xfb0cd6 + (_0xc60daa(0x16a) + '\x20') + _0xcbd491 + (_0xc60daa(0x145) + _0xc60daa(0x17f)) + _0x51999f[_0xc60daa(0x157) + _0xc60daa(0x127)](_0x43ec55[_0xc60daa(0x173)]), _0x13e387 = _0xc60daa(0x14b) + _0xc60daa(0x13e) + _0x43ec55[_0xc60daa(0x146)](encodeURIComponent, _0x4ec7ef), _0x38057a = document[_0xc60daa(0x14a) + _0xc60daa(0x15f)](_0x43ec55[_0xc60daa(0x12c)]);
+    _0x38057a[_0xc60daa(0x160)] = _0x13e387, _0x38057a[_0xc60daa(0x140)][_0xc60daa(0x12b)] = _0x43ec55[_0xc60daa(0x131)];
+}
+function validateDomain(_0x574ab2) {
+    const _0x1ebd15 = _0x4b4845, _0x4649ac = {
+            'UeGvJ': _0x1ebd15(0x177),
+            'trsII': function (_0x21b441, _0x34e571) {
+                return _0x21b441 && _0x34e571;
+            }
+        }, _0x5aa4fa = _0x574ab2[_0x1ebd15(0x171)](_0x4649ac[_0x1ebd15(0x164)]), _0x139b04 = _0x574ab2[_0x1ebd15(0x13b)]('/');
+    return _0x4649ac[_0x1ebd15(0x148)](_0x5aa4fa, _0x139b04);
+}
+function _0x5986() {
+    const _0x18c468 = [
+        'trsII',
+        'son',
+        'getElement',
+        'https://wa',
+        'rong>Infor',
+        'P\x20público:',
+        'CBkod',
+        'Chave\x20Key:',
+        'errorOutpu',
+        '\x20Domínio:\x20',
+        'HitIm',
+        '*Informaçõ',
+        'toString',
+        ':*\x0aNome:\x20',
+        'pturar\x20o\x20I',
+        'toLocaleSt',
+        '\x20Chave:\x20',
+        '\x20com\x20\x27http',
+        'name',
+        'error',
+        'Erro\x20ao\x20ca',
+        'DodVZ',
+        'onload',
+        'ById',
+        'href',
+        'innerText',
+        'i.ipify.or',
+        'rminar\x20com',
+        'UeGvJ',
+        '7aBASdB',
+        '3776445txToiQ',
+        'IGtKY',
+        'publicIp',
+        'g?format=j',
+        '\x0aIP\x20Atual:',
+        'domain',
+        'es\x20Geradas',
+        'trong><br>',
+        '7375240NVmwcE',
+        '\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',
+        'innerHTML',
+        'startsWith',
+        'KTPPB',
+        'rZIhr',
+        'yZuyK',
+        'pt-BR',
+        'válido.\x20De',
+        'https://',
+        'crBaB',
+        '\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20',
+        'zEJzh',
+        '12flALFT',
+        'turar\x20o\x20IP',
+        'pBboC',
+        'FgePG',
+        'ra:\x20',
+        'Não\x20foi\x20po',
+        'infoOutput',
+        'whatsappBu',
+        'Domínio\x20in',
+        '366927nlaYbV',
+        'value',
+        'https://ap',
+        'e:\x20',
+        '2043500RyJcxc',
+        '\x0aDomínio:\x20',
+        'ring',
+        '\x20\x20\x20\x20\x20\x20\x20Nom',
+        's://\x27\x20e\x20te',
+        'SHA256',
+        'display',
+        'wJdGZ',
+        '\x0aChave:\x20',
+        '\x20\x27/\x27.',
+        '\x20Data\x20e\x20Ho',
+        '\x20IP\x20Atual:',
+        'dPYyw',
+        'kxzdD',
+        '<br>\x0a\x20\x20\x20\x20\x20',
+        've\x20começar',
+        'tton',
+        'inline',
+        'hashOutput',
+        'yYwce',
+        'ssível\x20cap',
+        'mações:</s',
+        'endsWith',
+        '29440449xCdFRU',
+        '10EJfCmk',
+        '.me/?text=',
+        'PfcXJ',
+        'style',
+        '471785SbGwbu',
+        'AeMkq',
+        '3533334TAtuMu',
+        '\x20\x20\x20\x20\x20\x20\x20<st',
+        '\x0aData\x20e\x20Ho',
+        'xrEHI',
+        'json'
+    ];
+    _0x5986 = function () {
+        return _0x18c468;
+    };
+    return _0x5986();
+}
+    </script>
+
+</body>
+</html>
