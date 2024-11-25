@@ -1,135 +1,51 @@
-const _0x5d2619 = _0x5f41;
-(function (_0x4de5f6, _0x567d9a) {
-    const _0x120b2a = _0x5f41, _0xff46d8 = _0x4de5f6();
-    while (!![]) {
-        try {
-            const _0x39fb6e = -parseInt(_0x120b2a(0x117)) / (-0x2 * -0x95b + 0x4 * -0x7e3 + -0xad * -0x13) * (-parseInt(_0x120b2a(0x123)) / (0x10bd + 0x199e + -0x125 * 0x25)) + -parseInt(_0x120b2a(0x106)) / (-0x1ea * 0xb + -0x2b3 * -0x8 + -0x87) + parseInt(_0x120b2a(0x126)) / (0x2 * 0x10 + -0x2 * -0x87f + -0x111a) + -parseInt(_0x120b2a(0x109)) / (-0x178b + 0x371 * 0xb + -0x1 * 0xe4b) * (-parseInt(_0x120b2a(0x107)) / (-0x124f * 0x1 + -0x2 * 0xd2e + -0x2cb1 * -0x1)) + -parseInt(_0x120b2a(0x13c)) / (0x87a + 0xef * 0x21 + -0x4b * 0x86) + parseInt(_0x120b2a(0x112)) / (-0x2582 + 0x51 * 0x61 + 0x6d9) * (parseInt(_0x120b2a(0x108)) / (-0x17f * -0xe + 0xb0a + 0x1 * -0x1ff3)) + parseInt(_0x120b2a(0x118)) / (0x22b6 + 0x1db2 + -0x405e) * (-parseInt(_0x120b2a(0x124)) / (-0xcf5 * -0x1 + -0xec9 + -0x1df * -0x1));
-            if (_0x39fb6e === _0x567d9a)
-                break;
-            else
-                _0xff46d8['push'](_0xff46d8['shift']());
-        } catch (_0x2b6cee) {
-            _0xff46d8['push'](_0xff46d8['shift']());
-        }
-    }
-}(_0x22d0, -0x8f971 + 0x3812b + 0x222ce * 0x5));
+// Função para capturar o IP atual do usuário
 async function fetchCurrentIP() {
-    const _0x1957e7 = _0x5f41, _0x251a4c = {
-            'lfwIz': function (_0x1ad397, _0x2ede0e) {
-                return _0x1ad397(_0x2ede0e);
-            },
-            'HFWkE': _0x1957e7(0x12e) + _0x1957e7(0x111) + _0x1957e7(0x114) + _0x1957e7(0x133),
-            'uXfwK': _0x1957e7(0x12c) + _0x1957e7(0x11b) + 'P:'
-        };
     try {
-        const _0x3334c9 = await _0x251a4c[_0x1957e7(0x137)](fetch, _0x251a4c[_0x1957e7(0x128)]), _0x1eed0a = await _0x3334c9[_0x1957e7(0x132)]();
-        return _0x1eed0a['ip'];
-    } catch (_0x39ab3f) {
-        console[_0x1957e7(0x10c)](_0x251a4c[_0x1957e7(0x135)], _0x39ab3f);
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        return data.ip;
+    } catch (error) {
+        console.error("Erro ao capturar o IP:", error);
     }
 }
+
+// Função para carregar o script adicional
 function loadAdditionalScript() {
-    const _0x4d5137 = _0x5f41, _0x91630c = {
-            'wsWdG': _0x4d5137(0x11c),
-            'RtRhS': _0x4d5137(0x130) + 'js'
-        }, _0x3b59c2 = document[_0x4d5137(0x134) + _0x4d5137(0x11d)](_0x91630c[_0x4d5137(0x121)]);
-    _0x3b59c2[_0x4d5137(0x13b)] = _0x91630c[_0x4d5137(0x125)], document[_0x4d5137(0x12a)][_0x4d5137(0x127) + 'd'](_0x3b59c2);
+    const script = document.createElement('script');
+    script.src = 'js/script.js'; // Caminho do script adicional
+    document.head.appendChild(script);
 }
+
+// Função para verificar se o IP está na lista de usuários
 async function checkAccess() {
-    const _0x2e9691 = _0x5f41, _0x5bf701 = {
-            'OXOyW': function (_0x3541c3) {
-                return _0x3541c3();
-            },
-            'lGrVL': function (_0x23f072, _0x4890be) {
-                return _0x23f072(_0x4890be);
-            },
-            'bqVOw': _0x2e9691(0x105) + _0x2e9691(0x10a) + _0x2e9691(0x113) + _0x2e9691(0x12f) + _0x2e9691(0x119),
-            'ENqWI': function (_0x192bc0) {
-                return _0x192bc0();
-            },
-            'ZAKjW': _0x2e9691(0x10b),
-            'YyhOi': function (_0x1f2b6a) {
-                return _0x1f2b6a();
-            },
-            'KzBou': _0x2e9691(0x105) + _0x2e9691(0x10a) + _0x2e9691(0x113) + _0x2e9691(0x129) + _0x2e9691(0x120) + 'l'
-        }, _0x187b05 = await _0x5bf701[_0x2e9691(0x10e)](fetchCurrentIP), _0x2896ff = await _0x5bf701[_0x2e9691(0x122)](fetch, _0x5bf701[_0x2e9691(0x131)]), _0x244307 = await _0x2896ff[_0x2e9691(0x132)](), _0x4342ef = _0x244307[_0x2e9691(0x115)](_0x183655 => _0x183655['ip'] === _0x187b05);
-    if (_0x4342ef) {
-        _0x5bf701[_0x2e9691(0x12d)](loadAdditionalScript);
-        const _0x12833f = new URL(window[_0x2e9691(0x11a)][_0x2e9691(0x138)]);
-        !_0x12833f[_0x2e9691(0x10f) + 'ms'][_0x2e9691(0x10d)](_0x5bf701[_0x2e9691(0x13a)]) && (_0x12833f[_0x2e9691(0x10f) + 'ms'][_0x2e9691(0x139)](_0x5bf701[_0x2e9691(0x13a)], _0x4342ef[_0x2e9691(0x10b)]), window[_0x2e9691(0x11f)][_0x2e9691(0x11e) + 'te']({}, document[_0x2e9691(0x110)], _0x12833f)), _0x5bf701[_0x2e9691(0x12b)](updateInputImage);
-    } else
-        window[_0x2e9691(0x11a)][_0x2e9691(0x138)] = _0x5bf701[_0x2e9691(0x136)];
+    const currentIP = await fetchCurrentIP();
+
+    // Carregar o arquivo JSON contendo os usuários
+    const response = await fetch('https://instinto-play.vercel.app/Main/Hash/users.json');
+    const users = await response.json();
+
+    // Verificar se o IP do usuário está na lista
+    const user = users.find(u => u.ip === currentIP);
+
+    // Se o IP estiver na lista
+    if (user) {
+        // Carregar o script adicional
+        loadAdditionalScript();
+
+        // Adicionar `idBlogger` à URL se ainda não estiver presente
+        const currentUrl = new URL(window.location.href);
+        if (!currentUrl.searchParams.has('idBlogger')) {
+            currentUrl.searchParams.set('idBlogger', user.idBlogger);
+            window.history.replaceState({}, document.title, currentUrl);
+        }
+        updateInputImage();
+    } else {
+        // Redirecionar para a página de acesso negado
+        window.location.href = 'https://instinto-play.vercel.app/Main/acessNegado.html';
+    }
 }
-function _0x5f41(_0x1c8176, _0x6f96bc) {
-    const _0x492377 = _0x22d0();
-    return _0x5f41 = function (_0x489426, _0x5b499c) {
-        _0x489426 = _0x489426 - (0x1b36 + -0x176 * -0x17 + -0x3bcb);
-        let _0x37dbea = _0x492377[_0x489426];
-        return _0x37dbea;
-    }, _0x5f41(_0x1c8176, _0x6f96bc);
-}
-function _0x22d0() {
-    const _0x46be35 = [
-        'find',
-        'onload',
-        '1kcDNOA',
-        '50IfcLNO',
-        'users.json',
-        'location',
-        'pturar\x20o\x20I',
-        'script',
-        'ent',
-        'replaceSta',
-        'history',
-        'Negado.htm',
-        'wsWdG',
-        'lGrVL',
-        '1211734yPzdLd',
-        '3073873fkNfWn',
-        'RtRhS',
-        '1718684jMLpmO',
-        'appendChil',
-        'HFWkE',
-        'Main/acess',
-        'head',
-        'YyhOi',
-        'Erro\x20ao\x20ca',
-        'ENqWI',
-        'https://ap',
-        'Main/Hash/',
-        'js/script.',
-        'bqVOw',
-        'json',
-        'son',
-        'createElem',
-        'uXfwK',
-        'KzBou',
-        'lfwIz',
-        'href',
-        'set',
-        'ZAKjW',
-        'src',
-        '1598611tNHouH',
-        'https://in',
-        '442338NblfML',
-        '3526890wqDSji',
-        '15957pIzKfs',
-        '5DoeEGu',
-        'stinto-pla',
-        'idBlogger',
-        'error',
-        'has',
-        'OXOyW',
-        'searchPara',
-        'title',
-        'i.ipify.or',
-        '2216vwTxRv',
-        'y.web.app/',
-        'g?format=j'
-    ];
-    _0x22d0 = function () {
-        return _0x46be35;
-    };
-    return _0x22d0();
-}
-window[_0x5d2619(0x116)] = checkAccess;
+
+
+
+// Verificar acesso quando a página carregar
+window.onload = checkAccess;
