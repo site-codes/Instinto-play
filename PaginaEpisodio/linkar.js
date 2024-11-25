@@ -12,7 +12,7 @@ document.write(
 );
 
 document.write(
-  '<link rel="stylesheet" href="https://instinto-play.vercel.app/aginaEpisodio/css/geral.css"/>'
+  '<link rel="stylesheet" href="https://instinto-play.vercel.app/PaginaEpisodio/css/geral.css"/>'
 );
 document.write(
   '<link rel="stylesheet" href="https://instinto-play.vercel.app/PaginaEpisodio/css/outros.css"/>'
