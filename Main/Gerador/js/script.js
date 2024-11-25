@@ -235,17 +235,18 @@ window.addEventListener("scroll", () => {
 });
 
 
-
-
-// Função para carregar o arquivo JSON e verificar os trechos na URL
 async function verificaTrechosURL() {
     try {
-        const response = await fetch('https://instinto-play.vercel.app/Main/Hash/permitidos.json'); // Substitua pelo caminho real do arquivo JSON
+        const response = await fetch('https://instinto-play.vercel.app/Main/Hash/permitidos.json');
         const data = await response.json();
         const urlAtual = window.location.href;
-        const trechosPermitidos = data.permitidos;
 
+        console.log('URL Atual:', urlAtual);  // Log da URL atual para depuração
+
+        const trechosPermitidos = data.permitidos;
         const algumTrechoPresente = trechosPermitidos.some(trecho => urlAtual.includes(trecho));
+
+        console.log('Algum trecho permitido presente?', algumTrechoPresente); // Log da verificação
 
         if (!algumTrechoPresente) {
             window.location.href = 'https://instinto-play.vercel.app/Main/acessNegado.html';
@@ -255,6 +256,8 @@ async function verificaTrechosURL() {
         window.location.href = 'https://instinto-play.vercel.app/Main/acessNegado.html';
     }
 }
+
+
 
 // Função para verificar se o script `valida-ip.js` está presente
 function verificaScriptValidaIP() {
