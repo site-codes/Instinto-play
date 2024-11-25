@@ -25,7 +25,7 @@ async function verificarUser(chavekEY) {
     if (userExistente && dominioAtual.includes(userExistente.domain.replace(/^https?:\/\//, ''))) {
     } else {
         // Redirecionar para outra página se o token ou domínio não for válido
-        window.location.href = 'http://li.cnm.org.br/r/2eNcvn';
+        window.location.href = 'https://instintoanimes.blogspot.com/';
     }
 }
 
