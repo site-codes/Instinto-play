@@ -300,14 +300,14 @@ window.addEventListener('load', () => {
 
             if (category.includes('Filme')) {
                 if (category.includes('Animação')) {
-                    inputcapaplay.value = 'https://instinto-play.web.app/Imagens/animacaoPlay.png';
-                    inputcapause.value = 'https://instinto-play.web.app/Imagens/animacaoPause.png';
+                    inputcapaplay.value = 'https://instinto-play.vercel.app/Imagens/animacaoPlay.png';
+                    inputcapause.value = 'https://instinto-play.vercel.app/Imagens/animacaoPause.png';
                 } else if (category.includes('Anime')) {
-                    inputcapaplay.value = 'https://instinto-play.web.app/Imagens/animePlay.png';
-                    inputcapause.value = 'https://instinto-play.web.app/Imagens/animePause.png';
+                    inputcapaplay.value = 'https://instinto-play.vercel.app/Imagens/animePlay.png';
+                    inputcapause.value = 'https://instinto-play.vercel.app/Imagens/animePause.png';
                 } else {
-                    inputcapaplay.value = 'https://instinto-play.web.app/Imagens/moviePlay.png';
-                    inputcapause.value = 'https://instinto-play.web.app/Imagens/moviePause.png';
+                    inputcapaplay.value = 'https://instinto-play.vercel.app/Imagens/moviePlay.png';
+                    inputcapause.value = 'https://instinto-play.vercel.app/Imagens/moviePause.png';
                 }
             }
 
