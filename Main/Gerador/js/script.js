@@ -1,632 +1,227 @@
-const _0x77c438 = _0x1a2d;
-(function (_0x3ac58b, _0xbeea93) {
-    const _0x319b11 = _0x1a2d, _0x5591b2 = _0x3ac58b();
-    while (!![]) {
-        try {
-            const _0x13c96a = -parseInt(_0x319b11(0x1d0)) / (-0xcea + -0x1d * 0x53 + 0x1652) + -parseInt(_0x319b11(0x1a5)) / (-0x501 * 0x1 + -0x1 * -0x1601 + -0x19 * 0xae) + parseInt(_0x319b11(0x1d4)) / (0xc5 + -0x153d + 0x147b) * (-parseInt(_0x319b11(0x222)) / (0xa1f + -0x4c9 + -0x6 * 0xe3)) + -parseInt(_0x319b11(0x158)) / (0x8 * 0x1fd + 0x35 * 0x6c + -0x1 * 0x263f) + -parseInt(_0x319b11(0x192)) / (0x3a + -0x73c * 0x3 + -0x1 * -0x1580) * (-parseInt(_0x319b11(0x18c)) / (-0x77 * -0x33 + 0xd45 + -0x24f3)) + -parseInt(_0x319b11(0x1d2)) / (-0x1 * 0x33f + -0x16b1 + 0x19f8) * (-parseInt(_0x319b11(0x21a)) / (0x5dd * 0x5 + 0x1f01 * 0x1 + -0x3c49)) + parseInt(_0x319b11(0x17c)) / (-0x257 + -0x65 * -0x37 + 0x1352 * -0x1) * (parseInt(_0x319b11(0x211)) / (-0x866 + -0x228f * -0x1 + -0x1a1e));
-            if (_0x13c96a === _0xbeea93)
-                break;
-            else
-                _0x5591b2['push'](_0x5591b2['shift']());
-        } catch (_0x3e363b) {
-            _0x5591b2['push'](_0x5591b2['shift']());
-        }
-    }
-}(_0x32f5, -0x19c1 * 0x19 + 0x49437 + 0x1ec59));
-const API_KEY = _0x77c438(0x1f2) + _0x77c438(0x1d1) + _0x77c438(0x1de) + '26', BASE_URL = _0x77c438(0x238) + _0x77c438(0x21f) + _0x77c438(0x20f);
-let currentMoviePage = -0x13 * -0x95 + 0xb3e * 0x2 + -0x218a, currentTVPage = 0x23fa + -0x617 * -0x3 + -0x363e, totalMoviePages = -0x15 * -0x16f + 0x19cf * 0x1 + -0x37ea, totalTVPages = -0x1 * 0x6b1 + -0x2166 + -0x3 * -0xd5d, totalMovies = -0x1 * 0x3a + 0xc7c + 0x1 * -0xc42, totalTVShows = -0x6d * -0x1a + 0x1c38 + -0x274a, isSearching = ![];
-const allowedLanguages = [
-    'pt',
-    'en',
-    'ja',
-    'ko',
-    'fr',
-    'es',
-    'zh'
-];
-async function fetchPopularMovies(_0x1f4c68 = 0x2 * 0x1e7 + -0x22fa + -0x1 * -0x1f2d) {
-    const _0x13d98e = _0x77c438, _0x17ac6f = {
-            'mwszI': function (_0x219bba, _0x5ddae6) {
-                return _0x219bba(_0x5ddae6);
-            },
-            'JMuJD': function (_0x10e814, _0x1d9408) {
-                return _0x10e814 / _0x1d9408;
-            }
-        }, _0x86cb4e = await _0x17ac6f[_0x13d98e(0x1f5)](fetch, BASE_URL + (_0x13d98e(0x166) + _0x13d98e(0x1d9) + _0x13d98e(0x1f7)) + API_KEY + (_0x13d98e(0x209) + _0x13d98e(0x1c3) + '=') + _0x1f4c68), _0xb2b970 = await _0x86cb4e[_0x13d98e(0x198)]();
-    return totalMovies = _0xb2b970[_0x13d98e(0x162) + _0x13d98e(0x1f8)], totalMoviePages = Math[_0x13d98e(0x1a9)](_0x17ac6f[_0x13d98e(0x19a)](totalMovies, -0x73b + 0x20ca + 0x251 * -0xb)), _0xb2b970[_0x13d98e(0x16e)][_0x13d98e(0x20a)](_0x4d9725 => allowedLanguages[_0x13d98e(0x1e2)](_0x4d9725[_0x13d98e(0x1e7) + _0x13d98e(0x174)]) && _0x4d9725[_0x13d98e(0x1ba) + 'h']);
+
+
+// home
+
+const API_KEY = '2018cef294a4077a7c4ab5a06a153826';
+const BASE_URL = 'https://api.themoviedb.org/3';
+
+let currentMoviePage = 1; // Página atual de filmes
+let currentTVPage = 1; // Página atual de séries
+let totalMoviePages = 0; // Total de páginas de filmes
+let totalTVPages = 0; // Total de páginas de séries
+let totalMovies = 0; // Total de postagens de filmes
+let totalTVShows = 0; // Total de postagens de séries
+let isSearching = false; // Flag para saber se está pesquisando
+
+// Idiomas permitidos
+const allowedLanguages = ['pt', 'en', 'ja', 'ko', 'fr', 'es', 'zh'];
+
+async function fetchPopularMovies(page = 1) {
+    const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&language=pt-BR&page=${page}`);
+    const data = await response.json();
+    totalMovies = data.total_results; // Atualiza total de postagens de filmes
+    totalMoviePages = Math.ceil(totalMovies / 20); // Total de páginas
+    return data.results.filter(movie => allowedLanguages.includes(movie.original_language) && movie.poster_path); // Filtra por idiomas permitidos e verifica se há imagem
 }
-function _0x1a2d(_0x1c8b55, _0x59784d) {
-    const _0x9bf9f9 = _0x32f5();
-    return _0x1a2d = function (_0x2bfef0, _0x5bc734) {
-        _0x2bfef0 = _0x2bfef0 - (-0x50 * 0x73 + 0xa4 * 0x29 + 0xafa);
-        let _0x168d46 = _0x9bf9f9[_0x2bfef0];
-        return _0x168d46;
-    }, _0x1a2d(_0x1c8b55, _0x59784d);
+
+async function fetchPopularTVShows(page = 1) {
+    const response = await fetch(`${BASE_URL}/tv/popular?api_key=${API_KEY}&language=pt-BR&page=${page}`);
+    const data = await response.json();
+    totalTVShows = data.total_results; // Atualiza total de postagens de séries
+    totalTVPages = Math.ceil(totalTVShows / 20); // Total de páginas
+    return data.results.filter(tvShow => allowedLanguages.includes(tvShow.original_language) && tvShow.poster_path); // Filtra por idiomas permitidos e verifica se há imagem
 }
-async function fetchPopularTVShows(_0x439fe9 = 0x831 + 0x23af + -0x2bdf) {
-    const _0x4f3eef = _0x77c438, _0x38819b = {
-            'SNQih': function (_0x5217f3, _0x180bc2) {
-                return _0x5217f3(_0x180bc2);
-            },
-            'gJYLu': function (_0x5253da, _0xde1af) {
-                return _0x5253da / _0xde1af;
-            }
-        }, _0x2746d4 = await _0x38819b[_0x4f3eef(0x1cc)](fetch, BASE_URL + (_0x4f3eef(0x19d) + _0x4f3eef(0x1d7)) + API_KEY + (_0x4f3eef(0x209) + _0x4f3eef(0x1c3) + '=') + _0x439fe9), _0x2c0b7b = await _0x2746d4[_0x4f3eef(0x198)]();
-    return totalTVShows = _0x2c0b7b[_0x4f3eef(0x162) + _0x4f3eef(0x1f8)], totalTVPages = Math[_0x4f3eef(0x1a9)](_0x38819b[_0x4f3eef(0x1ee)](totalTVShows, -0x6a9 + 0x180c + -0xd3 * 0x15)), _0x2c0b7b[_0x4f3eef(0x16e)][_0x4f3eef(0x20a)](_0x144856 => allowedLanguages[_0x4f3eef(0x1e2)](_0x144856[_0x4f3eef(0x1e7) + _0x4f3eef(0x174)]) && _0x144856[_0x4f3eef(0x1ba) + 'h']);
+
+async function fetchMovies(query, page = 1) {
+    const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&page=${page}`);
+    const data = await response.json();
+    totalMovies = data.total_results; // Atualiza total de postagens de filmes
+    totalMoviePages = Math.ceil(totalMovies / 20); // Recalcula o total de páginas baseado na pesquisa
+    return data.results.filter(movie => allowedLanguages.includes(movie.original_language) && movie.poster_path); // Filtra por idiomas permitidos e verifica se há imagem
 }
-async function fetchMovies(_0x3d0dc6, _0x4db711 = -0x1 * 0xcd + -0x67 * -0x15 + -0x67 * 0x13) {
-    const _0x4de197 = _0x77c438, _0x46612c = {
-            'lhaoI': function (_0x1b0dc0, _0x40365e) {
-                return _0x1b0dc0(_0x40365e);
-            },
-            'eppTl': function (_0x31cccf, _0x2099b1) {
-                return _0x31cccf / _0x2099b1;
-            }
-        }, _0xc8b485 = await _0x46612c[_0x4de197(0x22c)](fetch, BASE_URL + (_0x4de197(0x22f) + _0x4de197(0x230) + 'y=') + API_KEY + _0x4de197(0x219) + _0x3d0dc6 + _0x4de197(0x1f6) + _0x4db711), _0x5ebc5e = await _0xc8b485[_0x4de197(0x198)]();
-    return totalMovies = _0x5ebc5e[_0x4de197(0x162) + _0x4de197(0x1f8)], totalMoviePages = Math[_0x4de197(0x1a9)](_0x46612c[_0x4de197(0x159)](totalMovies, -0x949 * -0x1 + 0x1388 + -0x1cbd)), _0x5ebc5e[_0x4de197(0x16e)][_0x4de197(0x20a)](_0x2402aa => allowedLanguages[_0x4de197(0x1e2)](_0x2402aa[_0x4de197(0x1e7) + _0x4de197(0x174)]) && _0x2402aa[_0x4de197(0x1ba) + 'h']);
+
+async function fetchTVShows(query, page = 1) {
+    const response = await fetch(`${BASE_URL}/search/tv?api_key=${API_KEY}&query=${query}&page=${page}`);
+    const data = await response.json();
+    totalTVShows = data.total_results; // Atualiza total de postagens de séries
+    totalTVPages = Math.ceil(totalTVShows / 20); // Recalcula o total de páginas baseado na pesquisa
+    return data.results.filter(tvShow => allowedLanguages.includes(tvShow.original_language) && tvShow.poster_path); // Filtra por idiomas permitidos e verifica se há imagem
 }
-async function fetchTVShows(_0x99d8bc, _0x42ed0a = -0x1 * -0x2028 + 0x1a47 + -0x3a6e) {
-    const _0x4dd966 = _0x77c438, _0x3d2c9c = {
-            'xqgAS': function (_0x2b9b81, _0x2bc4b6) {
-                return _0x2b9b81(_0x2bc4b6);
-            },
-            'xpQMK': function (_0xbea7a6, _0x5e6c4e) {
-                return _0xbea7a6 / _0x5e6c4e;
-            }
-        }, _0x167eb0 = await _0x3d2c9c[_0x4dd966(0x1b2)](fetch, BASE_URL + (_0x4dd966(0x1c8) + _0x4dd966(0x226)) + API_KEY + _0x4dd966(0x219) + _0x99d8bc + _0x4dd966(0x1f6) + _0x42ed0a), _0x51a0a7 = await _0x167eb0[_0x4dd966(0x198)]();
-    return totalTVShows = _0x51a0a7[_0x4dd966(0x162) + _0x4dd966(0x1f8)], totalTVPages = Math[_0x4dd966(0x1a9)](_0x3d2c9c[_0x4dd966(0x1a7)](totalTVShows, 0xef * 0x25 + -0x221e + -0x59 * 0x1)), _0x51a0a7[_0x4dd966(0x16e)][_0x4dd966(0x20a)](_0x36d3ee => allowedLanguages[_0x4dd966(0x1e2)](_0x36d3ee[_0x4dd966(0x1e7) + _0x4dd966(0x174)]) && _0x36d3ee[_0x4dd966(0x1ba) + 'h']);
-}
-function displayResults(_0x1fb7d6, _0x5bf421, _0x31458e = !![]) {
-    const _0x5ecc94 = _0x77c438, _0x565f8b = {
-            'prNXg': function (_0x1dd7ff, _0x1fcbb7) {
-                return _0x1dd7ff === _0x1fcbb7;
-            },
-            'iXkJO': function (_0x50a139, _0xcd88ea) {
-                return _0x50a139 === _0xcd88ea;
-            },
-            'MtOgO': _0x5ecc94(0x1dd),
-            'qpskY': _0x5ecc94(0x16b),
-            'BxdbZ': _0x5ecc94(0x1ef),
-            'HoSmR': _0x5ecc94(0x1ff),
-            'wZnpR': function (_0x295f6c, _0x1591c4) {
-                return _0x295f6c === _0x1591c4;
-            },
-            'ITbTz': _0x5ecc94(0x18f),
-            'EwFzq': _0x5ecc94(0x189),
-            'CePwe': _0x5ecc94(0x18e),
-            'LddbZ': _0x5ecc94(0x21c),
-            'glVQR': _0x5ecc94(0x196) + _0x5ecc94(0x213),
-            'kRoqT': _0x5ecc94(0x1e1) + 'e',
-            'FKhDb': _0x5ecc94(0x196) + _0x5ecc94(0x210),
-            'rPLpx': _0x5ecc94(0x1e1) + _0x5ecc94(0x22e),
-            'qqgEd': _0x5ecc94(0x172),
-            'yeSpi': _0x5ecc94(0x21b),
-            'vNkcy': _0x5ecc94(0x17d),
-            'QQMQx': _0x5ecc94(0x1bd),
-            'MJKaY': _0x5ecc94(0x18b),
-            'kzcGv': function (_0x48d7c7, _0x20ec52) {
-                return _0x48d7c7 === _0x20ec52;
-            },
-            'IsAxF': _0x5ecc94(0x207) + _0x5ecc94(0x1b7) + _0x5ecc94(0x180) + _0x5ecc94(0x1bc)
-        }, _0x180b7e = document[_0x5ecc94(0x15d) + _0x5ecc94(0x1fd)](_0x5bf421);
-    if (_0x565f8b[_0x5ecc94(0x1b5)](_0x1fb7d6[_0x5ecc94(0x14e)], 0x141 + -0x59f * -0x2 + 0xc7f * -0x1)) {
-        _0x180b7e[_0x5ecc94(0x23b)] = _0x565f8b[_0x5ecc94(0x171)];
+
+function displayResults(results, containerId, isMovie = true) {
+    const container = document.getElementById(containerId);
+    if (results.length === 0) {
+        container.innerHTML = '<p>Não há postagens disponíveis.</p>'; // Adiciona aviso se não houver resultados
         return;
     }
-    _0x180b7e[_0x5ecc94(0x23b)] = _0x1fb7d6[_0x5ecc94(0x218)](_0x355fb4 => {
-        const _0x13aedd = _0x5ecc94;
-        let _0x191a3e = '', _0x4cd555 = '';
-        if (!_0x31458e) {
-            const _0x116cbc = _0x355fb4[_0x13aedd(0x1e7) + _0x13aedd(0x174)], _0x2318d5 = _0x355fb4[_0x13aedd(0x165)][_0x13aedd(0x1e2)](0x13d9 * -0x1 + -0x231 + 0x161a);
-            if (_0x2318d5) {
-                if (_0x565f8b[_0x13aedd(0x1f9)](_0x116cbc, 'ja') || _0x565f8b[_0x13aedd(0x224)](_0x116cbc, 'zh'))
-                    _0x191a3e = _0x565f8b[_0x13aedd(0x193)], _0x4cd555 = _0x565f8b[_0x13aedd(0x223)];
-                else
-                    [
-                        'pt',
-                        'en'
-                    ][_0x13aedd(0x1e2)](_0x116cbc) ? (_0x191a3e = _0x565f8b[_0x13aedd(0x1e9)], _0x4cd555 = _0x565f8b[_0x13aedd(0x1a2)]) : (_0x191a3e = _0x565f8b[_0x13aedd(0x1e9)], _0x4cd555 = _0x565f8b[_0x13aedd(0x1a2)]);
-            } else
-                _0x565f8b[_0x13aedd(0x1cf)](_0x116cbc, 'ko') ? (_0x191a3e = _0x565f8b[_0x13aedd(0x216)], _0x4cd555 = _0x565f8b[_0x13aedd(0x1cb)]) : (_0x191a3e = _0x565f8b[_0x13aedd(0x152)], _0x4cd555 = _0x565f8b[_0x13aedd(0x1d3)]);
-        } else {
-            const _0x30a818 = _0x355fb4[_0x13aedd(0x1e7) + _0x13aedd(0x174)], _0x1d9122 = _0x355fb4[_0x13aedd(0x165)][_0x13aedd(0x1e2)](-0x3e + 0x25 * -0x7c + 0x2 * 0x91d);
-            _0x1d9122 ? _0x565f8b[_0x13aedd(0x1cf)](_0x30a818, 'ja') ? (_0x191a3e = _0x565f8b[_0x13aedd(0x1dc)], _0x4cd555 = _0x565f8b[_0x13aedd(0x184)]) : (_0x191a3e = _0x565f8b[_0x13aedd(0x1f1)], _0x4cd555 = _0x565f8b[_0x13aedd(0x1d6)]) : (_0x191a3e = _0x565f8b[_0x13aedd(0x170)], _0x4cd555 = _0x565f8b[_0x13aedd(0x1b9)]);
+    
+    container.innerHTML = results.map(result => {
+        let category = '';
+        let categoryClass = ''; // Variável para a classe do card
+
+        if (!isMovie) { // Apenas para séries
+            const originalLanguage = result.original_language;
+            const isAnimation = result.genre_ids.includes(16); // Verifica se é um anime
+
+            // Atribui a categoria e a classe com base no idioma
+            if (isAnimation) {
+                if (originalLanguage === 'ja' || originalLanguage === 'zh') {
+                    category = '#Anime';
+                    categoryClass = 'anime'; // Classe para anime
+                } else if (['pt', 'en'].includes(originalLanguage)) {
+                    category = '#Animação';
+                    categoryClass = 'animação'; // Classe para animação
+                } else {
+                    category = '#Animação'; // Outros idiomas
+                    categoryClass = 'animação'; // Classe para animação
+                }
+            } else {
+                // Verifica se é uma série coreana que não é animação
+                if (originalLanguage === 'ko') {
+                    category = '#Dorama';
+                    categoryClass = 'dorama'; // Classe para dorama
+                } else {
+                    category = '#Série'; // Para outras séries
+                    categoryClass = 'serie'; // Classe para série
+                }
+            }
+        } else { // Para filmes
+            const originalLanguage = result.original_language;
+            const isAnimation = result.genre_ids.includes(16); // Verifica se é uma animação
+
+            if (isAnimation) {
+                if (originalLanguage === 'ja') {
+                    category = 'Filme - Anime'; // Para filmes do Japão (anime)
+                    categoryClass = 'filme-anime'; // Classe para filme-anime
+                } else {
+                    category = 'Filme - Animação'; // Para outros filmes de animação
+                    categoryClass = 'filme-animacao'; // Classe para filme-animação
+                }
+            } else {
+                category = 'Filme'; // Para filmes comuns
+                categoryClass = 'filme'; // Classe para filme
+            }
         }
-        return _0x13aedd(0x205) + _0x13aedd(0x19b) + '=\x22' + (_0x31458e ? _0x565f8b[_0x13aedd(0x16c)] : _0x565f8b[_0x13aedd(0x178)]) + _0x13aedd(0x231) + _0x355fb4['id'] + '&' + _0x4cd555 + (_0x13aedd(0x20b) + _0x13aedd(0x1f0)) + _0x4cd555 + (_0x13aedd(0x237) + _0x13aedd(0x185) + _0x13aedd(0x177) + _0x13aedd(0x1e4) + _0x13aedd(0x188) + _0x13aedd(0x214)) + _0x355fb4[_0x13aedd(0x1ba) + 'h'] + (_0x13aedd(0x237) + _0x13aedd(0x185) + _0x13aedd(0x225)) + (_0x355fb4[_0x13aedd(0x22b)] || _0x355fb4[_0x13aedd(0x227)]) + (_0x13aedd(0x187) + _0x13aedd(0x1ae) + _0x13aedd(0x200) + '=\x22') + _0x191a3e + '\x22>' + (_0x31458e ? _0x191a3e[_0x13aedd(0x1ca)]('-', _0x565f8b[_0x13aedd(0x190)]) : '') + (_0x13aedd(0x19e) + _0x13aedd(0x1ae) + _0x13aedd(0x191)) + (_0x355fb4[_0x13aedd(0x1bb) + 'te'] || _0x355fb4[_0x13aedd(0x176) + _0x13aedd(0x203)]) + (_0x13aedd(0x1b3) + _0x13aedd(0x182) + _0x13aedd(0x1c7));
-    })[_0x5ecc94(0x201)]('');
+
+        return `
+            <a href="${isMovie ? 'filme.html' : 'serie.html'}?data-id=${result.id}&${categoryClass}" class="card ${categoryClass}">
+                <img src="https://image.tmdb.org/t/p/w500${result.poster_path}">
+                <h3>${result.title || result.name}</h3>
+                <h8 type="${category}">${isMovie ? category.replace('-', ' - ') : ''}</h8>
+                <p>${result.release_date || result.first_air_date}</p>
+            </a>
+        `;
+    }).join('');
 }
-function openDetailPage(_0x17ece2) {
-    const _0x34c743 = _0x77c438, _0x42545f = {
-            'xIHcO': _0x34c743(0x167),
-            'ksMhW': _0x34c743(0x21b),
-            'ayqDj': _0x34c743(0x17d),
-            'Hlwrf': _0x34c743(0x1bd)
-        }, _0x139f48 = _0x17ece2[_0x34c743(0x20c) + 'te'](_0x42545f[_0x34c743(0x22d)]), _0x47e8c2 = _0x17ece2[_0x34c743(0x1d5)][_0x34c743(0x155)](_0x42545f[_0x34c743(0x1da)]), _0x562a09 = _0x47e8c2 ? _0x42545f[_0x34c743(0x1c2)] : _0x42545f[_0x34c743(0x168)];
-    window[_0x34c743(0x1e5)][_0x34c743(0x1ab)] = _0x562a09 + _0x34c743(0x231) + _0x139f48;
+
+function openDetailPage(card) {
+    const id = card.getAttribute('data-id'); // Obtém o data-id do card
+    const isMovie = card.classList.contains('filme'); // Verifica se é um filme
+    const detailPage = isMovie ? 'filme.html' : 'serie.html'; // Define a página de detalhes com base no tipo
+    window.location.href = `${detailPage}?data-id=${id}`; // Passa o data-id na URL
 }
+
+
 function updatePageInfo() {
-    const _0x188541 = _0x77c438, _0x57e0a4 = {
-            'vGDxh': _0x188541(0x21e) + _0x188541(0x234),
-            'wQaRL': _0x188541(0x1df) + 'es',
-            'BbcIf': _0x188541(0x15e) + _0x188541(0x1b0),
-            'qztht': function (_0x49e43d, _0x1ae593) {
-                return _0x49e43d >= _0x1ae593;
-            },
-            'DRubD': _0x188541(0x15e) + 'tv',
-            'TGzfI': function (_0x19b923, _0x34d03b) {
-                return _0x19b923 >= _0x34d03b;
-            },
-            'MPfNZ': _0x188541(0x236) + _0x188541(0x1a4),
-            'pIhYp': _0x188541(0x1b6) + _0x188541(0x195),
-            'WAOOA': _0x188541(0x199),
-            'PqZjZ': _0x188541(0x217) + _0x188541(0x1b0),
-            'dCCCe': function (_0x3d1730, _0x21502b) {
-                return _0x3d1730 === _0x21502b;
-            },
-            'haSxS': _0x188541(0x217) + 'tv',
-            'FajbJ': function (_0xe52851, _0x1ce8d8) {
-                return _0xe52851 === _0x1ce8d8;
-            }
-        }, _0x2da25b = _0x57e0a4[_0x188541(0x20e)][_0x188541(0x1c0)]('|');
-    let _0x32d221 = -0x101f + 0x5da * 0x6 + -0x12fd;
-    while (!![]) {
-        switch (_0x2da25b[_0x32d221++]) {
-        case '0':
-            document[_0x188541(0x15d) + _0x188541(0x1fd)](_0x57e0a4[_0x188541(0x235)])[_0x188541(0x169) + 't'] = '(' + totalMovies + ')';
-            continue;
-        case '1':
-            document[_0x188541(0x15d) + _0x188541(0x1fd)](_0x57e0a4[_0x188541(0x17a)])[_0x188541(0x22a)] = _0x57e0a4[_0x188541(0x156)](currentMoviePage, totalMoviePages);
-            continue;
-        case '2':
-            document[_0x188541(0x15d) + _0x188541(0x1fd)](_0x57e0a4[_0x188541(0x1f3)])[_0x188541(0x22a)] = _0x57e0a4[_0x188541(0x1db)](currentTVPage, totalTVPages);
-            continue;
-        case '3':
-            document[_0x188541(0x15d) + _0x188541(0x1fd)](_0x57e0a4[_0x188541(0x1b4)])[_0x188541(0x169) + 't'] = _0x188541(0x202) + currentMoviePage + _0x188541(0x208) + totalMoviePages;
-            continue;
-        case '4':
-            document[_0x188541(0x15d) + _0x188541(0x1fd)](_0x57e0a4[_0x188541(0x163)])[_0x188541(0x169) + 't'] = _0x188541(0x202) + currentTVPage + _0x188541(0x208) + totalTVPages;
-            continue;
-        case '5':
-            document[_0x188541(0x15d) + _0x188541(0x1fd)](_0x57e0a4[_0x188541(0x1e0)])[_0x188541(0x169) + 't'] = '(' + totalTVShows + ')';
-            continue;
-        case '6':
-            document[_0x188541(0x15d) + _0x188541(0x1fd)](_0x57e0a4[_0x188541(0x1ea)])[_0x188541(0x22a)] = _0x57e0a4[_0x188541(0x15a)](currentMoviePage, -0xf19 + -0x3 * 0xaed + 0x2fe1);
-            continue;
-        case '7':
-            document[_0x188541(0x15d) + _0x188541(0x1fd)](_0x57e0a4[_0x188541(0x1cd)])[_0x188541(0x22a)] = _0x57e0a4[_0x188541(0x1e3)](currentTVPage, -0xaad + -0x3 * 0xc5e + 0x2fc8);
-            continue;
-        }
-        break;
-    }
+    document.getElementById('current-movie-page').textContent = `Página ${currentMoviePage} de ${totalMoviePages}`;
+    document.getElementById('current-tv-page').textContent = `Página ${currentTVPage} de ${totalTVPages}`;
+    document.getElementById('load-prev-movies').disabled = currentMoviePage === 1; // Desabilitar botão se for a primeira página
+    document.getElementById('load-prev-tv').disabled = currentTVPage === 1; // Desabilitar botão se for a primeira página
+    document.getElementById('load-more-movies').disabled = currentMoviePage >= totalMoviePages; // Desabilitar se não houver próxima página
+    document.getElementById('load-more-tv').disabled = currentTVPage >= totalTVPages; // Desabilitar se não houver próxima página
+    document.getElementById('total-movies').textContent = `(${totalMovies})`; // Atualiza total de filmes
+    document.getElementById('total-tv').textContent = `(${totalTVShows})`; // Atualiza total de séries
 }
+
 async function loadInitialContent() {
-    const _0x4bd6d0 = _0x77c438, _0x14f7fa = {
-            'bRBtH': function (_0x34df39, _0x11d87d) {
-                return _0x34df39(_0x11d87d);
-            },
-            'oamrG': function (_0x107828, _0x36a532) {
-                return _0x107828(_0x36a532);
-            },
-            'tfClr': function (_0x13fd64, _0x3cacaa, _0x174e78, _0x6aa8cb) {
-                return _0x13fd64(_0x3cacaa, _0x174e78, _0x6aa8cb);
-            },
-            'dpzKi': _0x4bd6d0(0x15c) + _0x4bd6d0(0x1f8),
-            'EtKRm': function (_0x31f905, _0x1a1938, _0x430921, _0x2560c2) {
-                return _0x31f905(_0x1a1938, _0x430921, _0x2560c2);
-            },
-            'rbIBh': _0x4bd6d0(0x197),
-            'xnHWS': function (_0x542883) {
-                return _0x542883();
-            }
-        }, _0x14f30 = await _0x14f7fa[_0x4bd6d0(0x15b)](fetchPopularMovies, currentMoviePage), _0x500e88 = await _0x14f7fa[_0x4bd6d0(0x204)](fetchPopularTVShows, currentTVPage);
-    _0x14f7fa[_0x4bd6d0(0x1b8)](displayResults, _0x14f30, _0x14f7fa[_0x4bd6d0(0x157)], !![]), _0x14f7fa[_0x4bd6d0(0x229)](displayResults, _0x500e88, _0x14f7fa[_0x4bd6d0(0x14f)], ![]), _0x14f7fa[_0x4bd6d0(0x183)](updatePageInfo);
+    const movies = await fetchPopularMovies(currentMoviePage);
+    const tvShows = await fetchPopularTVShows(currentTVPage);
+    
+    displayResults(movies, 'movie-results', true);
+    displayResults(tvShows, 'tv-results', false);
+    updatePageInfo(); // Atualiza as informações da página
 }
-document[_0x77c438(0x15d) + _0x77c438(0x1fd)](_0x77c438(0x20d))[_0x77c438(0x16d) + _0x77c438(0x16f)](_0x77c438(0x1c4), async _0x7daecb => {
-    const _0x3f3c9f = _0x77c438, _0xc751f4 = {
-            'JYxyD': function (_0x45b620, _0x477ce7, _0x1f150d) {
-                return _0x45b620(_0x477ce7, _0x1f150d);
-            },
-            'roxgC': function (_0x513350, _0x5d67b5, _0x374c54, _0x6a2a47) {
-                return _0x513350(_0x5d67b5, _0x374c54, _0x6a2a47);
-            },
-            'AFbwN': _0x3f3c9f(0x15c) + _0x3f3c9f(0x1f8),
-            'HgskE': function (_0x33332e, _0x150ce3, _0x24b8e3, _0x293c23) {
-                return _0x33332e(_0x150ce3, _0x24b8e3, _0x293c23);
-            },
-            'JUXBO': _0x3f3c9f(0x197),
-            'SnpPN': function (_0x364075) {
-                return _0x364075();
-            }
-        }, _0x1e6569 = _0x7daecb[_0x3f3c9f(0x186)][_0x3f3c9f(0x151)][_0x3f3c9f(0x1d8)]();
-    if (_0x1e6569) {
-        isSearching = !![], currentMoviePage = -0x242b + 0x255a + -0x12e, currentTVPage = -0x9c5 + 0x19aa * 0x1 + 0x153 * -0xc;
-        const _0x2e1ce4 = await _0xc751f4[_0x3f3c9f(0x221)](fetchMovies, _0x1e6569, currentMoviePage), _0x34a3db = await _0xc751f4[_0x3f3c9f(0x221)](fetchTVShows, _0x1e6569, currentTVPage);
-        _0xc751f4[_0x3f3c9f(0x17f)](displayResults, _0x2e1ce4, _0xc751f4[_0x3f3c9f(0x1e8)], !![]), _0xc751f4[_0x3f3c9f(0x19c)](displayResults, _0x34a3db, _0xc751f4[_0x3f3c9f(0x1fc)], ![]), _0xc751f4[_0x3f3c9f(0x23a)](updatePageInfo);
-    } else
-        isSearching = ![], currentMoviePage = -0x47c + -0x339 * 0x5 + 0x149a, currentTVPage = -0x103d + 0xfe5 + 0x59, _0xc751f4[_0x3f3c9f(0x23a)](loadInitialContent);
-}), document[_0x77c438(0x15d) + _0x77c438(0x1fd)](_0x77c438(0x15e) + _0x77c438(0x1b0))[_0x77c438(0x16d) + _0x77c438(0x16f)](_0x77c438(0x161), async () => {
-    const _0x315dbc = _0x77c438, _0x25d559 = {
-            'RKYqv': function (_0x5941e5, _0x2bad01, _0x15b30d) {
-                return _0x5941e5(_0x2bad01, _0x15b30d);
-            },
-            'EjNyb': _0x315dbc(0x20d),
-            'AMqRQ': function (_0x4152b4, _0x3e7d47, _0x24e11b, _0x54c18e) {
-                return _0x4152b4(_0x3e7d47, _0x24e11b, _0x54c18e);
-            },
-            'BkFom': _0x315dbc(0x15c) + _0x315dbc(0x1f8),
-            'jXdgV': function (_0x313a05, _0x353752) {
-                return _0x313a05(_0x353752);
-            },
-            'xJvqV': function (_0x21555f, _0x9e14eb, _0xf38cc6, _0x35c2ae) {
-                return _0x21555f(_0x9e14eb, _0xf38cc6, _0x35c2ae);
-            },
-            'TnpAr': function (_0x3c2ce3) {
-                return _0x3c2ce3();
-            }
-        };
+
+document.getElementById('search').addEventListener('input', async (event) => {
+    const query = event.target.value.trim();
+    
+    if (query) {
+        isSearching = true; // Define que está pesquisando
+        currentMoviePage = 1; // Reinicia a página ao buscar
+        currentTVPage = 1; // Reinicia a página ao buscar
+        const movies = await fetchMovies(query, currentMoviePage);
+        const tvShows = await fetchTVShows(query, currentTVPage);
+        
+        displayResults(movies, 'movie-results', true);
+        displayResults(tvShows, 'tv-results', false);
+        updatePageInfo(); // Atualiza as informações da página
+    } else {
+        isSearching = false; // Define que não está mais pesquisando
+        currentMoviePage = 1; // Reinicia a página ao buscar
+        currentTVPage = 1; // Reinicia a página ao buscar
+        loadInitialContent(); // Carrega o conteúdo inicial
+    }
+});
+
+// Navegação de páginas para filmes
+document.getElementById('load-more-movies').addEventListener('click', async () => {
     if (isSearching) {
         currentMoviePage++;
-        const _0x3886cb = await _0x25d559[_0x315dbc(0x1c1)](fetchMovies, document[_0x315dbc(0x15d) + _0x315dbc(0x1fd)](_0x25d559[_0x315dbc(0x1ac)])[_0x315dbc(0x151)][_0x315dbc(0x1d8)](), currentMoviePage);
-        _0x25d559[_0x315dbc(0x206)](displayResults, _0x3886cb, _0x25d559[_0x315dbc(0x1c9)], !![]);
+        const movies = await fetchMovies(document.getElementById('search').value.trim(), currentMoviePage);
+        displayResults(movies, 'movie-results', true);
     } else {
         currentMoviePage++;
-        const _0x2aba13 = await _0x25d559[_0x315dbc(0x18a)](fetchPopularMovies, currentMoviePage);
-        _0x25d559[_0x315dbc(0x160)](displayResults, _0x2aba13, _0x25d559[_0x315dbc(0x1c9)], !![]);
+        const movies = await fetchPopularMovies(currentMoviePage);
+        displayResults(movies, 'movie-results', true);
     }
-    _0x25d559[_0x315dbc(0x21d)](updatePageInfo);
-}), document[_0x77c438(0x15d) + _0x77c438(0x1fd)](_0x77c438(0x217) + _0x77c438(0x1b0))[_0x77c438(0x16d) + _0x77c438(0x16f)](_0x77c438(0x161), async () => {
-    const _0x1726a4 = _0x77c438, _0x425d3a = {
-            'FJiiF': function (_0x1573dd, _0x4f78f6) {
-                return _0x1573dd > _0x4f78f6;
-            },
-            'BSMgU': function (_0xf86b79, _0x521a1a, _0x27a4f6) {
-                return _0xf86b79(_0x521a1a, _0x27a4f6);
-            },
-            'RjNZy': _0x1726a4(0x20d),
-            'bIFai': function (_0x1d6dfe, _0x18053d, _0x499e38, _0x20e7c5) {
-                return _0x1d6dfe(_0x18053d, _0x499e38, _0x20e7c5);
-            },
-            'iLZiD': _0x1726a4(0x15c) + _0x1726a4(0x1f8),
-            'trdDV': function (_0x3cfcba, _0x3c8a51) {
-                return _0x3cfcba(_0x3c8a51);
-            },
-            'wnlXN': function (_0x54bb47) {
-                return _0x54bb47();
-            }
-        };
-    if (_0x425d3a[_0x1726a4(0x1bf)](currentMoviePage, -0x449 * -0x3 + -0x3f4 * -0x7 + -0x1 * 0x2886)) {
+    updatePageInfo(); // Atualiza as informações da página
+});
+
+document.getElementById('load-prev-movies').addEventListener('click', async () => {
+    if (currentMoviePage > 1) {
         currentMoviePage--;
         if (isSearching) {
-            const _0x431384 = await _0x425d3a[_0x1726a4(0x215)](fetchMovies, document[_0x1726a4(0x15d) + _0x1726a4(0x1fd)](_0x425d3a[_0x1726a4(0x1eb)])[_0x1726a4(0x151)][_0x1726a4(0x1d8)](), currentMoviePage);
-            _0x425d3a[_0x1726a4(0x1ad)](displayResults, _0x431384, _0x425d3a[_0x1726a4(0x1a0)], !![]);
+            const movies = await fetchMovies(document.getElementById('search').value.trim(), currentMoviePage);
+            displayResults(movies, 'movie-results', true);
         } else {
-            const _0x1b0efe = await _0x425d3a[_0x1726a4(0x1fa)](fetchPopularMovies, currentMoviePage);
-            _0x425d3a[_0x1726a4(0x1ad)](displayResults, _0x1b0efe, _0x425d3a[_0x1726a4(0x1a0)], !![]);
+            const movies = await fetchPopularMovies(currentMoviePage);
+            displayResults(movies, 'movie-results', true);
         }
-        _0x425d3a[_0x1726a4(0x1a6)](updatePageInfo);
+        updatePageInfo(); // Atualiza as informações da página
     }
-}), document[_0x77c438(0x15d) + _0x77c438(0x1fd)](_0x77c438(0x15e) + 'tv')[_0x77c438(0x16d) + _0x77c438(0x16f)](_0x77c438(0x161), async () => {
-    const _0x19ad6b = _0x77c438, _0x26b690 = {
-            'XzVcf': function (_0x48fdda, _0x2c3ea8, _0x320403) {
-                return _0x48fdda(_0x2c3ea8, _0x320403);
-            },
-            'qrgyG': _0x19ad6b(0x20d),
-            'vtBRJ': function (_0x11915d, _0x46ddf9, _0x5667ce, _0x2dc2b6) {
-                return _0x11915d(_0x46ddf9, _0x5667ce, _0x2dc2b6);
-            },
-            'XDamg': _0x19ad6b(0x197),
-            'rOkWd': function (_0x1bd5d5, _0x4c4b08) {
-                return _0x1bd5d5(_0x4c4b08);
-            },
-            'MQEbN': function (_0x5363b5) {
-                return _0x5363b5();
-            }
-        };
+});
+
+// Navegação de páginas para séries
+document.getElementById('load-more-tv').addEventListener('click', async () => {
     if (isSearching) {
         currentTVPage++;
-        const _0x1f9ee3 = await _0x26b690[_0x19ad6b(0x1c5)](fetchTVShows, document[_0x19ad6b(0x15d) + _0x19ad6b(0x1fd)](_0x26b690[_0x19ad6b(0x17e)])[_0x19ad6b(0x151)][_0x19ad6b(0x1d8)](), currentTVPage);
-        _0x26b690[_0x19ad6b(0x18d)](displayResults, _0x1f9ee3, _0x26b690[_0x19ad6b(0x1a8)], ![]);
+        const tvShows = await fetchTVShows(document.getElementById('search').value.trim(), currentTVPage);
+        displayResults(tvShows, 'tv-results', false);
     } else {
         currentTVPage++;
-        const _0x33d4a0 = await _0x26b690[_0x19ad6b(0x1be)](fetchPopularTVShows, currentTVPage);
-        _0x26b690[_0x19ad6b(0x18d)](displayResults, _0x33d4a0, _0x26b690[_0x19ad6b(0x1a8)], ![]);
+        const tvShows = await fetchPopularTVShows(currentTVPage);
+        displayResults(tvShows, 'tv-results', false);
     }
-    _0x26b690[_0x19ad6b(0x194)](updatePageInfo);
-}), document[_0x77c438(0x15d) + _0x77c438(0x1fd)](_0x77c438(0x217) + 'tv')[_0x77c438(0x16d) + _0x77c438(0x16f)](_0x77c438(0x161), async () => {
-    const _0x1e9c65 = _0x77c438, _0x23c2ac = {
-            'mPadu': function (_0x3135ee, _0x477a71) {
-                return _0x3135ee > _0x477a71;
-            },
-            'lSLQQ': function (_0x18634a, _0x19a6c0, _0x449a55) {
-                return _0x18634a(_0x19a6c0, _0x449a55);
-            },
-            'HCtZI': _0x1e9c65(0x20d),
-            'AabHx': function (_0x9a1c75, _0xf13e42, _0x43477f, _0x16973b) {
-                return _0x9a1c75(_0xf13e42, _0x43477f, _0x16973b);
-            },
-            'GDHXZ': _0x1e9c65(0x197),
-            'lJDAJ': function (_0x40abfa, _0x41228e) {
-                return _0x40abfa(_0x41228e);
-            },
-            'txzFv': function (_0x191057) {
-                return _0x191057();
-            }
-        };
-    if (_0x23c2ac[_0x1e9c65(0x212)](currentTVPage, -0x747 * -0x1 + 0x2427 + -0x2b6d)) {
+    updatePageInfo(); // Atualiza as informações da página
+});
+
+document.getElementById('load-prev-tv').addEventListener('click', async () => {
+    if (currentTVPage > 1) {
         currentTVPage--;
         if (isSearching) {
-            const _0x2053a6 = await _0x23c2ac[_0x1e9c65(0x232)](fetchTVShows, document[_0x1e9c65(0x15d) + _0x1e9c65(0x1fd)](_0x23c2ac[_0x1e9c65(0x181)])[_0x1e9c65(0x151)][_0x1e9c65(0x1d8)](), currentTVPage);
-            _0x23c2ac[_0x1e9c65(0x1ec)](displayResults, _0x2053a6, _0x23c2ac[_0x1e9c65(0x233)], ![]);
+            const tvShows = await fetchTVShows(document.getElementById('search').value.trim(), currentTVPage);
+            displayResults(tvShows, 'tv-results', false);
         } else {
-            const _0x3ffb0a = await _0x23c2ac[_0x1e9c65(0x1aa)](fetchPopularTVShows, currentTVPage);
-            _0x23c2ac[_0x1e9c65(0x1ec)](displayResults, _0x3ffb0a, _0x23c2ac[_0x1e9c65(0x233)], ![]);
+            const tvShows = await fetchPopularTVShows(currentTVPage);
+            displayResults(tvShows, 'tv-results', false);
         }
-        _0x23c2ac[_0x1e9c65(0x150)](updatePageInfo);
+        updatePageInfo(); // Atualiza as informações da página
     }
-}), loadInitialContent(), window[_0x77c438(0x16d) + _0x77c438(0x16f)](_0x77c438(0x19f), () => {
-    const _0x177bd5 = _0x77c438, _0x118e20 = {
-            'cTMhE': _0x177bd5(0x16a),
-            'TWuom': function (_0x9a1fa8, _0x29b23b) {
-                return _0x9a1fa8 > _0x29b23b;
-            },
-            'YCIwg': _0x177bd5(0x19f)
-        }, _0x53a5bd = document[_0x177bd5(0x239) + _0x177bd5(0x1a3)](_0x118e20[_0x177bd5(0x1af)]);
-    _0x118e20[_0x177bd5(0x173)](window[_0x177bd5(0x175)], 0x507 + 0x5 * 0x6f7 + -0x27da) ? _0x53a5bd[_0x177bd5(0x1d5)][_0x177bd5(0x1ed)](_0x118e20[_0x177bd5(0x179)]) : _0x53a5bd[_0x177bd5(0x1d5)][_0x177bd5(0x1ce)](_0x118e20[_0x177bd5(0x179)]);
 });
-function verificaScriptValidaIP() {
-    const _0x19002c = _0x77c438, _0x17d5f9 = {
-            'IPWxw': _0x19002c(0x228) + _0x19002c(0x1fe) + _0x19002c(0x1b1) + _0x19002c(0x1e6),
-            'IDQuW': function (_0x5c1a41, _0x311fc6) {
-                return _0x5c1a41 === _0x311fc6;
-            },
-            'TjPey': _0x19002c(0x1f4) + _0x19002c(0x1c6) + _0x19002c(0x1fb) + _0x19002c(0x15f) + _0x19002c(0x153) + _0x19002c(0x164)
-        }, _0x523043 = document[_0x19002c(0x239) + _0x19002c(0x1a1)](_0x17d5f9[_0x19002c(0x220)]);
-    _0x17d5f9[_0x19002c(0x154)](_0x523043[_0x19002c(0x14e)], -0x10a * 0x19 + 0x1 * 0x7a7 + -0x1 * -0x1253) && (window[_0x19002c(0x1e5)][_0x19002c(0x1ab)] = _0x17d5f9[_0x19002c(0x17b)]);
-}
-function _0x32f5() {
-    const _0x87d607 = [
-        'innerHTML',
-        'length',
-        'rbIBh',
-        'txzFv',
-        'value',
-        'CePwe',
-        'essNegado.',
-        'IDQuW',
-        'contains',
-        'qztht',
-        'dpzKi',
-        '1208370UxMIfw',
-        'eppTl',
-        'dCCCe',
-        'bRBtH',
-        'movie-resu',
-        'getElement',
-        'load-more-',
-        'pp/Main/ac',
-        'xJvqV',
-        'click',
-        'total_resu',
-        'pIhYp',
-        'html',
-        'genre_ids',
-        '/movie/pop',
-        'data-id',
-        'Hlwrf',
-        'textConten',
-        'header',
-        'anime',
-        'vNkcy',
-        'addEventLi',
-        'results',
-        'stener',
-        'qqgEd',
-        'IsAxF',
-        'Filme',
-        'TWuom',
-        'anguage',
-        'scrollY',
-        'first_air_',
-        'img\x20src=\x22h',
-        'QQMQx',
-        'YCIwg',
-        'BbcIf',
-        'TjPey',
-        '214520bSKBqZ',
-        'filme.html',
-        'qrgyG',
-        'roxgC',
-        'disponívei',
-        'HCtZI',
-        '\x20\x20\x20\x20\x20\x20\x20</a',
-        'xnHWS',
-        'kRoqT',
-        '\x20\x20\x20\x20\x20\x20\x20\x20\x20<',
-        'target',
-        '</h3>\x0a\x20\x20\x20\x20',
-        'ge.tmdb.or',
-        'dorama',
-        'jXdgV',
-        '\x20-\x20',
-        '1456280eNHmjf',
-        'vtBRJ',
-        '#Série',
-        '#Dorama',
-        'MJKaY',
-        '\x20\x20<p>',
-        '12ASsUhk',
-        'MtOgO',
-        'MQEbN',
-        '-page',
-        'Filme\x20-\x20An',
-        'tv-results',
-        'json',
-        'total-tv',
-        'JMuJD',
-        '\x20\x20\x20<a\x20href',
-        'HgskE',
-        '/tv/popula',
-        '</h8>\x0a\x20\x20\x20\x20',
-        'scroll',
-        'iLZiD',
-        'torAll',
-        'HoSmR',
-        'tor',
-        'vie-page',
-        '777630gFIkvK',
-        'wnlXN',
-        'xpQMK',
-        'XDamg',
-        'ceil',
-        'lJDAJ',
-        'href',
-        'EjNyb',
-        'bIFai',
-        '\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',
-        'cTMhE',
-        'movies',
-        '/valida-ip',
-        'xqgAS',
-        '</p>\x0a\x20\x20\x20\x20\x20',
-        'MPfNZ',
-        'kzcGv',
-        'current-tv',
-        'postagens\x20',
-        'tfClr',
-        'yeSpi',
-        'poster_pat',
-        'release_da',
-        's.</p>',
-        'serie.html',
-        'rOkWd',
-        'FJiiF',
-        'split',
-        'RKYqv',
-        'ayqDj',
-        'pt-BR&page',
-        'input',
-        'XzVcf',
-        'stinto-pla',
-        '>\x0a\x20\x20\x20\x20\x20\x20\x20\x20',
-        '/search/tv',
-        'BkFom',
-        'replace',
-        'EwFzq',
-        'SNQih',
-        'haSxS',
-        'remove',
-        'wZnpR',
-        '65751gzSNiP',
-        'a4077a7c4a',
-        '3006288wrGjya',
-        'LddbZ',
-        '403953CRRQOx',
-        'classList',
-        'rPLpx',
-        'r?api_key=',
-        'trim',
-        'ular?api_k',
-        'ksMhW',
-        'TGzfI',
-        'glVQR',
-        '#Anime',
-        'b5a06a1538',
-        'total-movi',
-        'WAOOA',
-        'filme-anim',
-        'includes',
-        'FajbJ',
-        'ttps://ima',
-        'location',
-        '.js\x22]',
-        'original_l',
-        'AFbwN',
-        'BxdbZ',
-        'PqZjZ',
-        'RjNZy',
-        'AabHx',
-        'add',
-        'gJYLu',
-        '#Animação',
-        'ard\x20',
-        'FKhDb',
-        '2018cef294',
-        'DRubD',
-        'https://in',
-        'mwszI',
-        '&page=',
-        'ey=',
-        'lts',
-        'prNXg',
-        'trdDV',
-        'y.vercel.a',
-        'JUXBO',
-        'ById',
-        '=\x22/Gerador',
-        'animação',
-        '\x20\x20<h8\x20type',
-        'join',
-        'Página\x20',
-        'date',
-        'oamrG',
-        '\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20',
-        'AMqRQ',
-        '<p>Não\x20há\x20',
-        '\x20de\x20',
-        '&language=',
-        'filter',
-        '\x22\x20class=\x22c',
-        'getAttribu',
-        'search',
-        'vGDxh',
-        'db.org/3',
-        'imação',
-        '154brSnEr',
-        'mPadu',
-        'ime',
-        'g/t/p/w500',
-        'BSMgU',
-        'ITbTz',
-        'load-prev-',
-        'map',
-        '&query=',
-        '9bVaYvy',
-        'filme',
-        'serie',
-        'TnpAr',
-        '3|4|6|7|1|',
-        'i.themovie',
-        'IPWxw',
-        'JYxyD',
-        '4phClfS',
-        'qpskY',
-        'iXkJO',
-        'h3>',
-        '?api_key=',
-        'name',
-        'script[src',
-        'EtKRm',
-        'disabled',
-        'title',
-        'lhaoI',
-        'xIHcO',
-        'acao',
-        '/search/mo',
-        'vie?api_ke',
-        '?data-id=',
-        'lSLQQ',
-        'GDHXZ',
-        '2|0|5',
-        'wQaRL',
-        'current-mo',
-        '\x22>\x0a\x20\x20\x20\x20\x20\x20\x20',
-        'https://ap',
-        'querySelec',
-        'SnpPN'
-    ];
-    _0x32f5 = function () {
-        return _0x87d607;
-    };
-    return _0x32f5();
-}
-verificaTrechosURL(), verificaScriptValidaIP();
+
+// Carrega o conteúdo inicial ao iniciar
+loadInitialContent();
+verificaTrechosURL();
+
+
+

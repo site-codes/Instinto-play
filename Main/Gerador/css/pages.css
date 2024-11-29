@@ -240,6 +240,28 @@ background:  #121026;
     margin-bottom:20px
 }
 
+
+.imgsPlayer{
+    display:flex;
+    gap:20px;
+    width:100%;
+    overflow:auto!important;
+    flex-direction:unset;
+    margin:10px 0
+}
+
+.imgsPlayer::-webkit-scrollbar{
+    display:none
+}
+
+.imgsPlayer img{
+    width:100px;
+    height:100%;
+    border-radius:10px;
+    object-fit: cover;
+    border:1px solid rgba(255,255,255,0.03)
+}
+
 video{
     height: 200px;
     width:100%;

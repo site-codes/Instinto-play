@@ -16,7 +16,7 @@
 <body>
     <header>
         <div class="logo">
-            <a href="./lista.html"><img id="logo" src="imgs/logo.jpg" alt=""></a>
+            <a href="/Gerador/lista.html"><img id="logo" src="imgs/logo.jpg" alt=""></a>
             <h1 id="filme-title"></h1>
         </div>
     </header>
@@ -26,7 +26,7 @@
     <div class="fixed">
       <button id="reset-button"></button>
       <button id="copy" onclick="copiarTexto()"></button>
-      <button onclick="criarPostagemDoTexto()" id="post" data-text="Postar no site" style="display:none"></button>
+      <button onclick="criarPostagemDoTexto()" id="post" data-text="Postar no site"></button>
     </div>
     <main>
         <form id="filme-form">
@@ -229,16 +229,27 @@
                     <a href="#" target="_blank"><img src=""></a>
                 </div>  
 
-                  <label>Link da Capa (Poster):</label>
-                  <div name="capaPlay" class="input-group">
-                      <input type="text" class="linkcapa" placeholder="capa poster do video" id="capaplay" oninput="updateImage(this)">
-                      <a href="#" target="_blank"><img class="imagePreview" src=""></a>
-                  </div>  
-                  <div class="input-group">
-                      <input name="capaPause" type="text" placeholder="Capa poster durante pausa" id="capapause"  class="linkcapa" oninput="updateImage(this)">
-                      <a href="#" target="_blank"><img class="imagePreview" src=""></a>
-                  </div>    
-
+                <label>Link da Capa (Poster):</label>
+                <div class="imgsPlayer">
+                    <img src="https://instinto-play.vercel.app/Imagens/moviePlay.png" onclick="selectImage(this, 'capaplay')">
+                    <img src="https://instinto-play.vercel.app/Imagens/animePlay.png" onclick="selectImage(this, 'capaplay')">
+                    <img src="https://instinto-play.vercel.app/Imagens/animacaoPlay.png" onclick="selectImage(this, 'capaplay')">
+                </div>
+                <div name="capaPlay" class="input-group">
+                    <input type="text" class="linkcapa" placeholder="capa poster do video" id="capaplay" oninput="updateImage(this)">
+                    <a href="#" target="_blank"><img class="imagePreview" src=""></a>
+                </div>  
+                
+                <label>Link da Capa durante pause (Poster):</label>
+                <div class="imgsPlayer">
+                    <img src="https://instinto-play.vercel.app/Imagens/moviePause.png" onclick="selectImage(this, 'capapause')">
+                    <img src="https://instinto-play.vercel.app/Imagens/animePause.png" onclick="selectImage(this, 'capapause')">
+                    <img src="https://instinto-play.vercel.app/Imagens/animacaoPause.png" onclick="selectImage(this, 'capapause')">
+                </div>
+                <div class="input-group">
+                    <input name="capaPause" type="text" placeholder="Capa poster durante pausa" id="capapause" class="linkcapa" oninput="updateImage(this)">
+                    <a href="#" target="_blank"><img class="imagePreview" src=""></a>
+                </div>  
                 
                 <div id="playerDiv">
                     <div class="player">
@@ -267,7 +278,7 @@
                     </div>
                 </div>
                 
-                <div class="player op">
+                <div class="player op" style="display:none">
                     <label for="poster-link">Button de Opening</label>
                     <input name="opI" type="text" placeholder="Inicio da Op" value="00m00s" id="opI">                
                     <input name="opF" type="text" placeholder="Final da Op" value="00m00s" id="opF"> 
@@ -275,6 +286,7 @@
             </div>            
         </form>
     </main>
+    <script src="js/acesspost.js"></script>
     <script src="js/videoplayer.js"></script>
     <script src="js/filmes.js"></script>
     <script src="js/pages.js"></script>
@@ -318,6 +330,7 @@ if (category === 'filme-animacao' || category === 'filme') {
         element.style.display = 'none'; 
     });
 }
+
 
 
     const title = document.getElementById("title").value;

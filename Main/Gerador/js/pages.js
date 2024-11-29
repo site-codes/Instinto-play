@@ -1,577 +1,320 @@
-const _0x3a6cb1 = _0x3d04;
-(function (_0x1d75c4, _0x1211f2) {
-    const _0x602ebb = _0x3d04, _0x5bbd5c = _0x1d75c4();
-    while (!![]) {
-        try {
-            const _0x4e7001 = -parseInt(_0x602ebb(0x171)) / (0xd * 0x1e3 + 0x16a4 + -0x2f2a) * (-parseInt(_0x602ebb(0x113)) / (-0x1aeb + 0x2613 + -0xb26)) + parseInt(_0x602ebb(0x109)) / (0x10c1 + -0x197e + 0x8c0) * (parseInt(_0x602ebb(0xb4)) / (0xf90 + 0x2345 + -0x32d1)) + parseInt(_0x602ebb(0x13c)) / (0x1114 + -0x7e4 + 0x1 * -0x92b) * (-parseInt(_0x602ebb(0xc8)) / (0x2ff + 0x13f4 + -0x16ed)) + parseInt(_0x602ebb(0xc4)) / (-0x10af + -0x12 * -0x8b + 0x6f0 * 0x1) * (parseInt(_0x602ebb(0xe1)) / (0x23e9 * 0x1 + 0x690 + -0xcd * 0x35)) + parseInt(_0x602ebb(0x165)) / (0x1919 + -0x24 * -0xc + -0x2 * 0xd60) + -parseInt(_0x602ebb(0x118)) / (-0x11f * -0x17 + 0x1d * 0xc5 + -0x3010) + parseInt(_0x602ebb(0x163)) / (0x1 * 0x1e7 + -0x1d35 + -0x1 * -0x1b59) * (-parseInt(_0x602ebb(0xd0)) / (0x1eac + -0x1ed6 + 0x36));
-            if (_0x4e7001 === _0x1211f2)
-                break;
-            else
-                _0x5bbd5c['push'](_0x5bbd5c['shift']());
-        } catch (_0x4d8195) {
-            _0x5bbd5c['push'](_0x5bbd5c['shift']());
-        }
-    }
-}(_0x98fe, -0x719 * -0x295 + 0x46a7b * -0x1 + -0x377 * 0x13a));
 function validateYouTubeLink() {
-    const _0x460fe8 = _0x3d04, _0x2b1e56 = {
-            'kefBc': _0x460fe8(0x136),
-            'lfXhb': _0x460fe8(0x14d) + 'k',
-            'lbguk': _0x460fe8(0x169) + _0x460fe8(0x176),
-            'cBIis': _0x460fe8(0x10f),
-            'JHSPy': _0x460fe8(0xd4)
-        }, _0x5400a6 = document[_0x460fe8(0xff) + _0x460fe8(0x151)](_0x2b1e56[_0x460fe8(0x186)]), _0x4e7bfc = document[_0x460fe8(0xff) + _0x460fe8(0x151)](_0x2b1e56[_0x460fe8(0x119)]), _0x24d40a = document[_0x460fe8(0xff) + _0x460fe8(0x151)](_0x2b1e56[_0x460fe8(0x12b)]), _0x1e91cc = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
-    if (_0x1e91cc[_0x460fe8(0xb8)](_0x5400a6[_0x460fe8(0x14b)])) {
-        const _0x497da0 = new URLSearchParams(new URL(_0x5400a6[_0x460fe8(0x14b)])[_0x460fe8(0x10b)]), _0x5a9eda = _0x497da0[_0x460fe8(0x11a)]('v') || _0x5400a6[_0x460fe8(0x14b)][_0x460fe8(0x193)]('/')[_0x460fe8(0xf1)]();
-        _0x4e7bfc[_0x460fe8(0x14b)] = _0x460fe8(0x10e) + _0x460fe8(0xc1) + _0x460fe8(0x138) + _0x5a9eda, _0x24d40a[_0x460fe8(0x12d)][_0x460fe8(0xfa)] = _0x2b1e56[_0x460fe8(0xdb)];
-    } else
-        _0x4e7bfc[_0x460fe8(0x14b)] = '', _0x24d40a[_0x460fe8(0x12d)][_0x460fe8(0xfa)] = _0x2b1e56[_0x460fe8(0x162)];
+    const trailerInput = document.getElementById('trailer');
+    const trailerLinkInput = document.getElementById('trailerLink');
+    const errorMessage = document.getElementById('trailer-error');
+
+    // Regex para validar link do YouTube
+    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
+
+    // Verifica se o link contém "https://youtu.be/" ou é um link válido
+    if (youtubeRegex.test(trailerInput.value)) {
+        const urlParams = new URLSearchParams(new URL(trailerInput.value).search);
+        const videoId = urlParams.get('v') || trailerInput.value.split('/').pop();
+
+        // Define o link embed
+        trailerLinkInput.value = `https://www.youtube.com/embed/${videoId}`;
+        errorMessage.style.display = 'none'; // Oculta a mensagem de erro
+    } else {
+        trailerLinkInput.value = ''; // Limpa o campo se o link for inválido
+        errorMessage.style.display = 'block'; // Mostra a mensagem de erro
+    }
 }
-function translateGenres(_0xdca1be) {
-    const _0x4969cf = _0x3d04;
-    return _0xdca1be[_0x4969cf(0x140)](_0x757dcd => genreTranslation[_0x757dcd] || _0x757dcd)[_0x4969cf(0x197)](',\x20')[_0x4969cf(0x14c)](/&/g, ',\x20');
+
+
+
+// generos
+function translateGenres(genres) {
+    return genres.map(genre => genreTranslation[genre] || genre).join(', ').replace(/&/g, ', ');
 }
+
+// capas links
 function getSeasonLinks() {
-    const _0x129410 = _0x3d04, _0x32d287 = { 'FNrCn': _0x129410(0xae) + 'ks' }, _0x3bcbd8 = document[_0x129410(0xff) + _0x129410(0x151)](_0x32d287[_0x129410(0x157)])[_0x129410(0x14b)][_0x129410(0x193)]('\x0a');
-    return _0x3bcbd8[_0x129410(0x140)](_0x9e30e6 => _0x9e30e6[_0x129410(0x17c)]())[_0x129410(0x172)](_0x503f05 => _0x503f05);
+    const seasonLinks = document.getElementById('season-links').value.split('\n');
+    return seasonLinks.map(link => link.trim()).filter(link => link); // Remove links vazios
 }
-function getSeason(_0x102fc3) {
-    const _0x1aea9c = _0x3d04, _0x5d0102 = {
-            'ZoffR': function (_0x1f9cd5, _0x314b08) {
-                return _0x1f9cd5 + _0x314b08;
-            },
-            'FCncs': function (_0x5361d4, _0x428d7f) {
-                return _0x5361d4 >= _0x428d7f;
-            },
-            'sRXHQ': function (_0x37f0bd, _0x3fb1b8) {
-                return _0x37f0bd <= _0x3fb1b8;
-            },
-            'YVzGz': _0x1aea9c(0x116),
-            'RoAsr': function (_0x5db4f5, _0x5ea949) {
-                return _0x5db4f5 <= _0x5ea949;
-            },
-            'DGrqn': _0x1aea9c(0xc7),
-            'hQXaA': function (_0x5ccd46, _0x45449e) {
-                return _0x5ccd46 >= _0x45449e;
-            },
-            'UGpqq': function (_0x4be6b7, _0x3bcd0a) {
-                return _0x4be6b7 <= _0x3bcd0a;
-            },
-            'wLZIb': _0x1aea9c(0x145),
-            'CaJZE': _0x1aea9c(0x15d)
-        }, _0xf8cd40 = _0x5d0102[_0x1aea9c(0x192)](new Date(_0x102fc3)[_0x1aea9c(0x117)](), 0xa * -0x13a + -0xf3e + -0x1 * -0x1b83);
-    if (_0x5d0102[_0x1aea9c(0x17b)](_0xf8cd40, -0x1 * 0x10e2 + -0x1 * -0xfad + -0x18 * -0xd) && _0x5d0102[_0x1aea9c(0xe3)](_0xf8cd40, -0x14f * -0x3 + 0x7 * 0x19f + -0xf41))
-        return _0x5d0102[_0x1aea9c(0x101)];
-    if (_0x5d0102[_0x1aea9c(0x17b)](_0xf8cd40, -0x1f43 + 0x46 * 0x45 + 0xbb * 0x11) && _0x5d0102[_0x1aea9c(0x15e)](_0xf8cd40, -0x19f0 + 0x2d7 + 0x1721))
-        return _0x5d0102[_0x1aea9c(0xc0)];
-    if (_0x5d0102[_0x1aea9c(0xb3)](_0xf8cd40, 0x1005 + -0x4b * -0x37 + -0x2019) && _0x5d0102[_0x1aea9c(0x108)](_0xf8cd40, 0xfa1 + 0x102f + 0x1fc5 * -0x1))
-        return _0x5d0102[_0x1aea9c(0xd5)];
-    return _0x5d0102[_0x1aea9c(0x13d)];
+
+
+// estaçao
+function getSeason(airDate) {
+    const month = new Date(airDate).getMonth() + 1;
+    if (month >= 3 && month <= 5) return 'Primavera';
+    if (month >= 6 && month <= 8) return 'Verão';
+    if (month >= 9 && month <= 11) return 'Outono';
+    return 'Inverno';
 }
-function formatReleaseDate(_0x10c5bb) {
-    const _0x78c961 = _0x3d04, _0x24bbc7 = {
-            'zDBCa': function (_0x7397ca, _0x145d94) {
-                return _0x7397ca(_0x145d94);
-            },
-            'geVWl': function (_0x562ff3, _0x1377fa) {
-                return _0x562ff3 + _0x1377fa;
-            }
-        }, _0x3fdfee = new Date(_0x10c5bb), _0x752a18 = _0x3fdfee[_0x78c961(0xcc) + 'r'](), _0x25e095 = _0x24bbc7[_0x78c961(0xfb)](String, _0x24bbc7[_0x78c961(0x125)](_0x3fdfee[_0x78c961(0x117)](), -0xbaf + 0x5 * -0x4df + -0x240b * -0x1))[_0x78c961(0xd7)](-0x9f * 0x1 + 0x17b2 + -0x1711, '0');
-    return '/' + _0x752a18 + '/' + _0x25e095 + '/';
+
+// capturar informaçoes
+
+// data mes e ano
+function formatReleaseDate(releaseDate) {
+    const date = new Date(releaseDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se necessário
+    return `/${year}/${month}/`;
 }
-function formatReleaseAno(_0x1fd4fc) {
-    const _0x2f8866 = _0x3d04, _0x39500e = new Date(_0x1fd4fc), _0x10a89d = _0x39500e[_0x2f8866(0xcc) + 'r']();
-    return '' + _0x10a89d;
+// data ano
+function formatReleaseAno(releaseAno) {
+    const date = new Date(releaseAno);
+    const year = date.getFullYear();
+    return `${year}`;
 }
-function formatDateToBR(_0x4e4740) {
-    const _0x347f1c = _0x3d04, [_0x8ad959, _0x4ca04d, _0x1d539f] = _0x4e4740[_0x347f1c(0x193)]('-');
-    return _0x1d539f + '/' + _0x4ca04d + '/' + _0x8ad959;
+// data brasil
+function formatDateToBR(dateString) {
+    const [year, month, day] = dateString.split('-'); // Divide a string em partes
+    return `${day}/${month}/${year}`; // Retorna no formato DD/MM/YYYY
 }
-function formatDateToBRShort(_0x3a2a11) {
-    const _0x3479b1 = _0x3d04, _0x56b671 = {
-            'rDXLb': function (_0x3f7174, _0x15f436) {
-                return _0x3f7174 + _0x15f436;
-            },
-            'gnZaQ': _0x3479b1(0xe4),
-            'DmoMD': _0x3479b1(0x18a),
-            'xBhHs': _0x3479b1(0xef),
-            'dnTMr': _0x3479b1(0xfd)
-        }, _0x14ff80 = new Date(_0x56b671[_0x3479b1(0x181)](_0x3a2a11, _0x56b671[_0x3479b1(0x16f)])), _0x108d83 = {
-            'day': _0x56b671[_0x3479b1(0xeb)],
-            'month': _0x56b671[_0x3479b1(0x15a)],
-            'year': _0x56b671[_0x3479b1(0xeb)]
-        }, _0x29ad6e = _0x14ff80[_0x3479b1(0xc5) + _0x3479b1(0x194)](_0x56b671[_0x3479b1(0xee)], _0x108d83);
-    return _0x29ad6e;
-}
-function normalizeTitle(_0x31c692) {
-    const _0x13c5d8 = _0x3d04, _0x51fcab = { 'iTezM': _0x13c5d8(0x146) }, _0x53b4fb = _0x31c692[_0x13c5d8(0x164)](_0x51fcab[_0x13c5d8(0x12c)])[_0x13c5d8(0x14c)](/[\u0300-\u036f]/g, '');
-    return _0x53b4fb[_0x13c5d8(0x16b) + 'e']()[_0x13c5d8(0x14c)](/&/g, 'e')[_0x13c5d8(0x14c)](/\s+/g, '-')[_0x13c5d8(0x14c)](/[^\w\-]+/g, '')[_0x13c5d8(0x14c)](/-+$/, '');
-}
-function updatePageLink() {
-    const _0x504dfa = _0x3d04, _0x285e5d = {
-            'CfrhQ': function (_0x5b4d29, _0x16dff1) {
-                return _0x5b4d29(_0x16dff1);
-            },
-            'cteUP': _0x504dfa(0x115),
-            'aJIfQ': _0x504dfa(0xf0),
-            'yOMqp': _0x504dfa(0xed),
-            'qOdhR': function (_0x5be36c, _0x50f2bf) {
-                return _0x5be36c === _0x50f2bf;
-            },
-            'fvoWY': _0x504dfa(0xce),
-            'izRJy': _0x504dfa(0x123),
-            'YkKGY': _0x504dfa(0xf5)
-        }, _0x433e47 = _0x285e5d[_0x504dfa(0x153)](formatReleaseDate, document[_0x504dfa(0xff) + _0x504dfa(0x151)](_0x285e5d[_0x504dfa(0x100)])[_0x504dfa(0x14b)]), _0x43f467 = _0x285e5d[_0x504dfa(0x153)](normalizeTitle, document[_0x504dfa(0xff) + _0x504dfa(0x151)](_0x285e5d[_0x504dfa(0x17e)])[_0x504dfa(0x14b)]), _0x11b834 = document[_0x504dfa(0xff) + _0x504dfa(0x151)](_0x285e5d[_0x504dfa(0xc6)])[_0x504dfa(0x14b)][_0x504dfa(0x16b) + 'e'](), _0x3e5046 = _0x285e5d[_0x504dfa(0x14a)](_0x11b834, _0x285e5d[_0x504dfa(0x139)]) ? _0x285e5d[_0x504dfa(0xcd)] : '';
-    document[_0x504dfa(0xff) + _0x504dfa(0x151)](_0x285e5d[_0x504dfa(0x191)])[_0x504dfa(0x14b)] = ('' + _0x433e47 + _0x43f467 + _0x3e5046)[_0x504dfa(0x17c)]();
-}
-document[_0x3a6cb1(0xff) + _0x3a6cb1(0x151)](_0x3a6cb1(0x120) + 'ct')[_0x3a6cb1(0x112) + _0x3a6cb1(0x110)](_0x3a6cb1(0x154), function () {
-    const _0x3e8aac = _0x3a6cb1, _0x47b54b = {
-            'lyYxa': _0x3e8aac(0x15f),
-            'ukYse': function (_0xe4e47b, _0x4c8fb1) {
-                return _0xe4e47b === _0x4c8fb1;
-            },
-            'WdPhI': _0x3e8aac(0x105),
-            'tLHAJ': _0x3e8aac(0x182)
-        }, _0x6cbe31 = document[_0x3e8aac(0xff) + _0x3e8aac(0x151)](_0x47b54b[_0x3e8aac(0xbd)]);
-    _0x47b54b[_0x3e8aac(0x13e)](this[_0x3e8aac(0x14b)], _0x47b54b[_0x3e8aac(0x135)]) ? _0x6cbe31[_0x3e8aac(0x14b)] = _0x47b54b[_0x3e8aac(0x18c)] : _0x6cbe31[_0x3e8aac(0x14b)] = '';
-});
-function copiarTexto() {
-    const _0x16481f = _0x3a6cb1, _0x7c30e = {
-            'GtISP': function (_0xd4f4d, _0x45a2d8) {
-                return _0xd4f4d(_0x45a2d8);
-            },
-            'VqOoC': _0x16481f(0xbe) + _0x16481f(0xdc) + _0x16481f(0x18b),
-            'UzQZn': _0x16481f(0x12a) + _0x16481f(0x10d) + _0x16481f(0xb5),
-            'Uijkb': _0x16481f(0x11d)
-        }, _0x253979 = document[_0x16481f(0xff) + _0x16481f(0x151)](_0x7c30e[_0x16481f(0xe5)])[_0x16481f(0x148)];
-    navigator[_0x16481f(0xf3)][_0x16481f(0x187)](_0x253979)[_0x16481f(0xd9)](() => {
-        const _0x480407 = _0x16481f;
-        _0x7c30e[_0x480407(0x14f)](alert, _0x7c30e[_0x480407(0x141)]);
-    })[_0x16481f(0xdf)](_0x41c4e4 => {
-        const _0x2d77c1 = _0x16481f;
-        console[_0x2d77c1(0x168)](_0x7c30e[_0x2d77c1(0xdd)], _0x41c4e4);
-    });
-}
-function updateImage(_0x59f91c) {
-    const _0x17c0be = _0x3a6cb1, _0x308777 = {
-            'fHJtG': _0x17c0be(0x155) + 'up',
-            'KwFDZ': _0x17c0be(0x147) + _0x17c0be(0x175),
-            'sdbOM': _0x17c0be(0xc9)
-        }, _0x2ab65f = _0x59f91c[_0x17c0be(0x14b)], _0x14f381 = _0x59f91c[_0x17c0be(0x15b)](_0x308777[_0x17c0be(0x121)])[_0x17c0be(0xf9) + _0x17c0be(0xb9)](_0x308777[_0x17c0be(0x126)]);
-    _0x2ab65f && (_0x14f381[_0x17c0be(0xd6)] = _0x2ab65f, _0x14f381[_0x17c0be(0x12d)][_0x17c0be(0xfa)] = _0x308777[_0x17c0be(0x14e)], _0x14f381[_0x17c0be(0x10c) + _0x17c0be(0x12e)][_0x17c0be(0x130)] = _0x2ab65f);
-}
-window[_0x3a6cb1(0x112) + _0x3a6cb1(0x110)](_0x3a6cb1(0x131), () => {
-    const _0x152cff = _0x3a6cb1, _0x2cf4c0 = {
-            'dXyav': _0x152cff(0x155) + 'up',
-            'SyooX': _0x152cff(0x147) + _0x152cff(0x175),
-            'nAQBJ': _0x152cff(0xc9),
-            'KyYCd': _0x152cff(0x144)
-        }, _0x22e04e = document[_0x152cff(0xf9) + _0x152cff(0x161)](_0x2cf4c0[_0x152cff(0x166)]);
-    _0x22e04e[_0x152cff(0x180)](_0x53ddd5 => {
-        const _0x574653 = _0x152cff, _0x446c1d = _0x53ddd5[_0x574653(0x15b)](_0x2cf4c0[_0x574653(0x156)])[_0x574653(0xf9) + _0x574653(0xb9)](_0x2cf4c0[_0x574653(0xb0)]), _0x42904a = _0x53ddd5[_0x574653(0x14b)];
-        _0x42904a && (_0x446c1d[_0x574653(0xd6)] = _0x42904a, _0x446c1d[_0x574653(0x12d)][_0x574653(0xfa)] = _0x2cf4c0[_0x574653(0xd1)], _0x446c1d[_0x574653(0x10c) + _0x574653(0x12e)][_0x574653(0x130)] = _0x42904a);
-    });
-}), document[_0x3a6cb1(0xff) + _0x3a6cb1(0x151)](_0x3a6cb1(0x115))[_0x3a6cb1(0x112) + _0x3a6cb1(0x110)](_0x3a6cb1(0x152), updatePageLink), document[_0x3a6cb1(0xff) + _0x3a6cb1(0x151)](_0x3a6cb1(0xf0))[_0x3a6cb1(0x112) + _0x3a6cb1(0x110)](_0x3a6cb1(0x152), updatePageLink), document[_0x3a6cb1(0xff) + _0x3a6cb1(0x151)](_0x3a6cb1(0xed))[_0x3a6cb1(0x112) + _0x3a6cb1(0x110)](_0x3a6cb1(0x154), updatePageLink);
-function checkCategories() {
-    const _0x3e7432 = _0x3a6cb1, _0x68770b = {
-            'agEFx': _0x3e7432(0xbc) + _0x3e7432(0x114) + '\x22]',
-            'RwdrP': _0x3e7432(0x19a),
-            'FDqlk': _0x3e7432(0xea) + _0x3e7432(0x158),
-            'xRgZZ': _0x3e7432(0x13a) + _0x3e7432(0xe8)
-        }, _0x307a66 = document[_0x3e7432(0xff) + _0x3e7432(0x151)](_0x68770b[_0x3e7432(0xf6)]), _0x78395e = _0x307a66[_0x3e7432(0x14b)][_0x3e7432(0x16b) + 'e']()[_0x3e7432(0x193)](',')[_0x3e7432(0x140)](_0x544981 => _0x544981[_0x3e7432(0x17c)]()), _0x35875b = document[_0x3e7432(0xf9) + _0x3e7432(0x161)](_0x68770b[_0x3e7432(0x124)]);
-    _0x35875b[_0x3e7432(0x180)](_0x50ed0c => {
-        const _0x218bf2 = _0x3e7432, _0x1b01da = _0x50ed0c[_0x218bf2(0xf9) + _0x218bf2(0xb9)](_0x68770b[_0x218bf2(0xf8)]), _0x3403db = _0x1b01da[_0x218bf2(0x14b)][_0x218bf2(0x16b) + 'e']();
-        _0x78395e[_0x218bf2(0xf2)](_0x3403db) ? (_0x50ed0c[_0x218bf2(0x128)][_0x218bf2(0xaf)](_0x68770b[_0x218bf2(0x122)]), _0x1b01da[_0x218bf2(0xcf)] = !![]) : (_0x50ed0c[_0x218bf2(0x128)][_0x218bf2(0xd3)](_0x68770b[_0x218bf2(0x122)]), _0x1b01da[_0x218bf2(0xcf)] = ![]);
-    });
-}
-function updateCategories(_0xb87e59) {
-    const _0x36f88f = _0x3a6cb1, _0x16eb77 = {
-            'kbwIo': _0x36f88f(0xea) + _0x36f88f(0x158),
-            'hACBK': _0x36f88f(0x167),
-            'QtGJv': function (_0x3e962f, _0x1b18ce) {
-                return _0x3e962f === _0x1b18ce;
-            },
-            'AwqSL': function (_0x3a297d, _0x11bf9c) {
-                return _0x3a297d + _0x11bf9c;
-            },
-            'Ukcvc': function (_0x41e451, _0x394f45) {
-                return _0x41e451 + _0x394f45;
-            },
-            'BgYGe': _0x36f88f(0x19a),
-            'aHblY': function (_0x45ccc4, _0x2d413a) {
-                return _0x45ccc4 !== _0x2d413a;
-            }
-        }, _0xb48eb9 = _0xb87e59[_0x36f88f(0xd8)], _0x2b16dc = document[_0x36f88f(0xff) + _0x36f88f(0x151)](_0x16eb77[_0x36f88f(0x132)]);
-    let _0x3834d1 = _0x2b16dc[_0x36f88f(0x14b)] ? _0x2b16dc[_0x36f88f(0x14b)][_0x36f88f(0x193)](',')[_0x36f88f(0x140)](_0x3f6710 => _0x3f6710[_0x36f88f(0x17c)]()) : [];
-    const _0x5e14af = _0xb48eb9[_0x36f88f(0x14b)][_0x36f88f(0x17c)](), _0x39cd2a = _0xb48eb9[_0x36f88f(0x15b)](_0x16eb77[_0x36f88f(0x11b)]);
-    if (_0xb48eb9[_0x36f88f(0xcf)])
-        _0x16eb77[_0x36f88f(0xb2)](_0x3834d1[_0x36f88f(0x183)], -0x20a7 + -0x36 * 0x3 + 0x2149) ? _0x2b16dc[_0x36f88f(0x14b)] = _0x5e14af : _0x2b16dc[_0x36f88f(0x14b)] = _0x16eb77[_0x36f88f(0x16c)](_0x16eb77[_0x36f88f(0x107)](_0x3834d1[_0x36f88f(0x197)](',\x20'), ',\x20'), _0x5e14af), _0x39cd2a[_0x36f88f(0x128)][_0x36f88f(0xaf)](_0x16eb77[_0x36f88f(0x12f)]);
-    else {
-        const _0x1ce3b1 = _0x3834d1[_0x36f88f(0x106)](_0x5e14af);
-        _0x16eb77[_0x36f88f(0xca)](_0x1ce3b1, -(-0x26b2 + 0x61 * -0x67 + 0x4dba)) && (_0x3834d1[_0x36f88f(0x13f)](_0x1ce3b1, 0x1824 + 0x19 * -0xdc + -0x2a7), _0x2b16dc[_0x36f88f(0x14b)] = _0x3834d1[_0x36f88f(0x197)](',\x20')), _0x39cd2a[_0x36f88f(0x128)][_0x36f88f(0xd3)](_0x16eb77[_0x36f88f(0x12f)]);
-    }
-}
-const categoryCheckboxes = document[_0x3a6cb1(0xf9) + _0x3a6cb1(0x161)](_0x3a6cb1(0x13a) + _0x3a6cb1(0xe2) + _0x3a6cb1(0x102) + _0x3a6cb1(0x127));
-categoryCheckboxes[_0x3a6cb1(0x180)](_0x232404 => {
-    const _0x2e6b84 = _0x3a6cb1, _0x5cf0c5 = { 'kkcSR': _0x2e6b84(0x154) };
-    _0x232404[_0x2e6b84(0x112) + _0x2e6b84(0x110)](_0x5cf0c5[_0x2e6b84(0x16e)], updateCategories);
-}), document[_0x3a6cb1(0xff) + _0x3a6cb1(0x151)](_0x3a6cb1(0xea) + _0x3a6cb1(0x158))[_0x3a6cb1(0x112) + _0x3a6cb1(0x110)](_0x3a6cb1(0x152), checkCategories);
-function checkGenres() {
-    const _0x42b82d = _0x3a6cb1, _0x568b9b = {
-            'QtUAt': _0x42b82d(0xbc) + _0x42b82d(0x114) + '\x22]',
-            'zmlOp': _0x42b82d(0x19a),
-            'dDCxr': _0x42b82d(0x11f),
-            'lLLtp': _0x42b82d(0x17f) + _0x42b82d(0x13b)
-        }, _0x2fffbc = document[_0x42b82d(0xff) + _0x42b82d(0x151)](_0x568b9b[_0x42b82d(0xc2)]), _0x1aae0b = _0x2fffbc[_0x42b82d(0x14b)][_0x42b82d(0x16b) + 'e']()[_0x42b82d(0x193)](',')[_0x42b82d(0x140)](_0x137ffd => _0x137ffd[_0x42b82d(0x17c)]()), _0x22f2a2 = document[_0x42b82d(0xf9) + _0x42b82d(0x161)](_0x568b9b[_0x42b82d(0x10a)]);
-    _0x22f2a2[_0x42b82d(0x180)](_0x26c299 => {
-        const _0x396856 = _0x42b82d, _0x55519e = _0x26c299[_0x396856(0xf9) + _0x396856(0xb9)](_0x568b9b[_0x396856(0x16d)]), _0x19ec3d = _0x55519e[_0x396856(0x14b)][_0x396856(0x16b) + 'e']();
-        _0x1aae0b[_0x396856(0xf2)](_0x19ec3d) ? (_0x26c299[_0x396856(0x128)][_0x396856(0xaf)](_0x568b9b[_0x396856(0xf7)]), _0x55519e[_0x396856(0xcf)] = !![]) : (_0x26c299[_0x396856(0x128)][_0x396856(0xd3)](_0x568b9b[_0x396856(0xf7)]), _0x55519e[_0x396856(0xcf)] = ![]);
-    });
-}
-function updateGenres(_0x5b89ea) {
-    const _0x3d4156 = _0x3a6cb1, _0x4e0c67 = {
-            'OMozj': _0x3d4156(0x11f),
-            'sPDLw': _0x3d4156(0x167),
-            'ZkIhy': _0x3d4156(0x19a),
-            'JdeEq': function (_0xa2f325, _0x29c4ca) {
-                return _0xa2f325 !== _0x29c4ca;
-            }
-        }, _0x49bd78 = _0x5b89ea[_0x3d4156(0xd8)], _0x5d5da1 = document[_0x3d4156(0xff) + _0x3d4156(0x151)](_0x4e0c67[_0x3d4156(0x18f)]);
-    let _0x57dee1 = _0x5d5da1[_0x3d4156(0x14b)][_0x3d4156(0x193)](',')[_0x3d4156(0x140)](_0x24b297 => _0x24b297[_0x3d4156(0x17c)]());
-    const _0x4b266f = _0x49bd78[_0x3d4156(0x14b)][_0x3d4156(0x17c)](), _0x450175 = _0x49bd78[_0x3d4156(0x15b)](_0x4e0c67[_0x3d4156(0x160)]);
-    if (_0x49bd78[_0x3d4156(0xcf)])
-        !_0x57dee1[_0x3d4156(0xf2)](_0x4b266f) && (_0x57dee1[_0x3d4156(0x111)](_0x4b266f), _0x5d5da1[_0x3d4156(0x14b)] = _0x57dee1[_0x3d4156(0x197)](',\x20')), _0x450175[_0x3d4156(0x128)][_0x3d4156(0xaf)](_0x4e0c67[_0x3d4156(0xe9)]);
-    else {
-        const _0x1f0162 = _0x57dee1[_0x3d4156(0x106)](_0x4b266f);
-        _0x4e0c67[_0x3d4156(0x178)](_0x1f0162, -(0xc2 * -0x1b + 0x9 * 0x76 + 0x1051)) && (_0x57dee1[_0x3d4156(0x13f)](_0x1f0162, 0xa * 0x241 + 0x97c + -0x493 * 0x7), _0x5d5da1[_0x3d4156(0x14b)] = _0x57dee1[_0x3d4156(0x197)](',\x20')), _0x450175[_0x3d4156(0x128)][_0x3d4156(0xd3)](_0x4e0c67[_0x3d4156(0xe9)]);
-    }
-}
-function _0x98fe() {
-    const _0x1fbcd4 = [
-        'length',
-        '/moviePaus',
-        'ZWBKA',
-        'kefBc',
-        'writeText',
-        'wUGRi',
-        '/moviePlay',
-        'numeric',
-        'cesso!',
-        'tLHAJ',
-        'script[src',
-        'onload',
-        'OMozj',
-        '/animacaoP',
-        'YkKGY',
-        'ZoffR',
-        'split',
-        'teString',
-        'irNQr',
-        'DDJcS',
-        'join',
-        'jYqQn',
-        'KSRim',
-        'check',
-        'season-lin',
-        'add',
-        'SyooX',
-        'ehmWS',
-        'QtGJv',
-        'hQXaA',
-        '4akikLW',
-        'to:\x20',
-        '.js\x22]',
-        'bWXVX',
-        'test',
-        'tor',
-        'Anime',
-        'checkbox\x22]',
-        'input[type',
-        'lyYxa',
-        'Texto\x20copi',
-        '/animePaus',
-        'DGrqn',
-        'w.youtube.',
-        'dDCxr',
-        'OvdOl',
-        '93709GIaiOi',
-        'toLocaleDa',
-        'yOMqp',
-        'Verão',
-        '26262hSYszj',
-        'flex',
-        'aHblY',
-        '/animePlay',
-        'getFullYea',
-        'izRJy',
-        'dublado',
-        'checked',
-        '238920nXYRaf',
-        'nAQBJ',
-        '.png',
-        'remove',
-        'block',
-        'wLZIb',
-        'src',
-        'padStart',
-        'target',
-        'then',
-        'Animação',
-        'cBIis',
-        'ado\x20com\x20su',
-        'UzQZn',
-        'y.vercel.a',
-        'catch',
-        'e.png',
-        '424llRdOJ',
-        '\x20input[typ',
-        'sRXHQ',
-        'T00:00:00',
-        'Uijkb',
-        'stinto-pla',
-        '#genero\x20in',
-        '\x20label',
-        'ZkIhy',
-        'selectedCa',
-        'DmoMD',
-        'JYIQg',
-        'subdub',
-        'dnTMr',
-        'short',
-        'title',
-        'pop',
-        'includes',
-        'clipboard',
-        'ESzZu',
-        'pageLink',
-        'FDqlk',
-        'zmlOp',
-        'agEFx',
-        'querySelec',
-        'display',
-        'zDBCa',
-        'OgkwQ',
-        'pt-BR',
-        'capapause',
-        'getElement',
-        'cteUP',
-        'YVzGz',
-        'e=\x22checkbo',
-        'Filme',
-        'uFZWx',
-        'sim',
-        'indexOf',
-        'Ukcvc',
-        'UGpqq',
-        '1813566NFcQiy',
-        'lLLtp',
-        'search',
-        'parentElem',
-        'piar\x20o\x20tex',
-        'https://ww',
-        'none',
-        'stener',
-        'push',
-        'addEventLi',
-        '235992fNJBTw',
-        '=\x22checkbox',
-        'release',
-        'Primavera',
-        'getMonth',
-        '1474620rQGLYN',
-        'lfXhb',
-        'get',
-        'hACBK',
-        'location',
-        'exibir-pre',
-        '/valida-ip',
-        'genres',
-        'bannerSele',
-        'fHJtG',
-        'RwdrP',
-        '-dublado',
-        'xRgZZ',
-        'geVWl',
-        'KwFDZ',
-        'x\x22]',
-        'classList',
-        'capaplay',
-        'Erro\x20ao\x20co',
-        'lbguk',
-        'iTezM',
-        'style',
-        'ent',
-        'BgYGe',
-        'href',
-        'load',
-        'kbwIo',
-        'ause.png',
-        '=\x22/Gerador',
-        'WdPhI',
-        'trailer',
-        'htOxR',
-        'com/embed/',
-        'fvoWY',
-        '#categoria',
-        'bel',
-        '810kFplOv',
-        'CaJZE',
-        'ukYse',
-        'splice',
-        'map',
-        'VqOoC',
-        'category',
-        'UfAOl',
-        '.linkcapa',
-        'Outono',
-        'NFD',
-        '.imagePrev',
-        'innerText',
-        'pp/Imagens',
-        'qOdhR',
-        'value',
-        'replace',
-        'trailerLin',
-        'sdbOM',
-        'GtISP',
-        'dvNWU',
-        'ById',
-        'input',
-        'CfrhQ',
-        'change',
-        '.input-gro',
-        'dXyav',
-        'FNrCn',
-        'tegories',
-        'do.html',
-        'xBhHs',
-        'closest',
-        '1|0|4|2|3|',
-        'Inverno',
-        'RoAsr',
-        'banner',
-        'sPDLw',
-        'torAll',
-        'JHSPy',
-        '737ZrgxGM',
-        'normalize',
-        '4028625inuNwH',
-        'KyYCd',
-        'label',
-        'error',
-        'trailer-er',
-        'lay.png',
-        'toLowerCas',
-        'AwqSL',
-        'QtUAt',
-        'kkcSR',
-        'gnZaQ',
-        'TpwyQ',
-        '9cKyVdu',
-        'filter',
-        'BDqCr',
-        'https://in',
-        'iew',
-        'ror',
-        'put[type=\x22',
-        'JdeEq',
-        'rVNmo',
-        'AQXAC',
-        'FCncs',
-        'trim',
-        '/acessNega',
-        'aJIfQ',
-        '#genero\x20la',
-        'forEach',
-        'rDXLb',
-        'Banner,'
-    ];
-    _0x98fe = function () {
-        return _0x1fbcd4;
+function formatDateToBRShort(dateString) {
+    const date = new Date(dateString + 'T00:00:00'); 
+    const options = { 
+        day: 'numeric', 
+        month: 'short', 
+        year: 'numeric' 
     };
-    return _0x98fe();
+    const formattedDate = date.toLocaleDateString('pt-BR', options); // Formata a data no padrão brasileiro
+    return formattedDate; // Mantém o ponto após o mês abreviado
 }
-function _0x3d04(_0x2633a8, _0x3e2e62) {
-    const _0xe4d6 = _0x98fe();
-    return _0x3d04 = function (_0x232c47, _0x7c421c) {
-        _0x232c47 = _0x232c47 - (-0x1ca + 0x37f * 0x1 + -0x107);
-        let _0x3e0e34 = _0xe4d6[_0x232c47];
-        return _0x3e0e34;
-    }, _0x3d04(_0x2633a8, _0x3e2e62);
+
+function normalizeTitle(title) {
+    // Remove acentos
+    const normalized = title.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    
+    // Substitui o '&' por 'e' antes de realizar as outras substituições
+    return normalized.toLowerCase()
+        .replace(/&/g, 'e')               // Substitui '&' por 'e'
+        .replace(/\s+/g, '-')             // Substitui espaços por hífens
+        .replace(/[^\w\-]+/g, '')         // Remove caracteres não alfanuméricos e hífens
+        .replace(/-+$/, '');              // Remove hífens no final
 }
-const genreCheckboxes = document[_0x3a6cb1(0xf9) + _0x3a6cb1(0x161)](_0x3a6cb1(0xe7) + _0x3a6cb1(0x177) + _0x3a6cb1(0xbb));
-genreCheckboxes[_0x3a6cb1(0x180)](_0x150a93 => {
-    const _0x55f80a = _0x3a6cb1, _0x596525 = { 'OvdOl': _0x55f80a(0x154) };
-    _0x150a93[_0x55f80a(0x112) + _0x55f80a(0x110)](_0x596525[_0x55f80a(0xc3)], updateGenres);
-}), document[_0x3a6cb1(0xff) + _0x3a6cb1(0x151)](_0x3a6cb1(0x11f))[_0x3a6cb1(0x112) + _0x3a6cb1(0x110)](_0x3a6cb1(0x152), checkGenres), window[_0x3a6cb1(0x112) + _0x3a6cb1(0x110)](_0x3a6cb1(0x131), () => {
-    const _0x335e6a = _0x3a6cb1, _0x1f60ab = {
-            'rVNmo': function (_0x495771) {
-                return _0x495771();
-            }
-        };
-    _0x1f60ab[_0x335e6a(0x179)](checkCategories), _0x1f60ab[_0x335e6a(0x179)](checkGenres);
-});
-function updateInputImage() {
-    const _0x5b8822 = _0x3a6cb1, _0x45ec7e = {
-            'ESzZu': _0x5b8822(0x15c) + '5',
-            'uFZWx': _0x5b8822(0x129),
-            'DDJcS': _0x5b8822(0x142),
-            'bWXVX': _0x5b8822(0x103),
-            'dvNWU': _0x5b8822(0xda),
-            'TpwyQ': _0x5b8822(0x174) + _0x5b8822(0xe6) + _0x5b8822(0xde) + _0x5b8822(0x149) + _0x5b8822(0x190) + _0x5b8822(0x16a),
-            'irNQr': _0x5b8822(0x174) + _0x5b8822(0xe6) + _0x5b8822(0xde) + _0x5b8822(0x149) + _0x5b8822(0x190) + _0x5b8822(0x133),
-            'AQXAC': _0x5b8822(0xba),
-            'ZWBKA': _0x5b8822(0x174) + _0x5b8822(0xe6) + _0x5b8822(0xde) + _0x5b8822(0x149) + _0x5b8822(0xcb) + _0x5b8822(0xd2),
-            'jYqQn': _0x5b8822(0x174) + _0x5b8822(0xe6) + _0x5b8822(0xde) + _0x5b8822(0x149) + _0x5b8822(0xbf) + _0x5b8822(0xe0),
-            'KSRim': _0x5b8822(0x174) + _0x5b8822(0xe6) + _0x5b8822(0xde) + _0x5b8822(0x149) + _0x5b8822(0x189) + _0x5b8822(0xd2),
-            'UfAOl': _0x5b8822(0x174) + _0x5b8822(0xe6) + _0x5b8822(0xde) + _0x5b8822(0x149) + _0x5b8822(0x184) + _0x5b8822(0xe0),
-            'OgkwQ': function (_0x538be2, _0x2063ee) {
-                return _0x538be2(_0x2063ee);
-            },
-            'JYIQg': _0x5b8822(0xfe),
-            'BDqCr': function (_0x329685, _0x51a177) {
-                return _0x329685(_0x51a177);
-            }
-        }, _0x5645e6 = _0x45ec7e[_0x5b8822(0xf4)][_0x5b8822(0x193)]('|');
-    let _0x28dade = 0xf49 + -0xd49 + -0x4 * 0x80;
-    while (!![]) {
-        switch (_0x5645e6[_0x28dade++]) {
-        case '0':
-            var _0x1b278e = document[_0x5b8822(0xff) + _0x5b8822(0x151)](_0x45ec7e[_0x5b8822(0x104)]);
-            continue;
-        case '1':
-            var _0x42d1cf = document[_0x5b8822(0xff) + _0x5b8822(0x151)](_0x45ec7e[_0x5b8822(0x196)])[_0x5b8822(0x148)];
-            continue;
-        case '2':
-            if (_0x42d1cf[_0x5b8822(0xf2)](_0x45ec7e[_0x5b8822(0xb7)])) {
-                if (_0x42d1cf[_0x5b8822(0xf2)](_0x45ec7e[_0x5b8822(0x150)]))
-                    _0x1b278e[_0x5b8822(0x14b)] = _0x45ec7e[_0x5b8822(0x170)], _0xd3d8a4[_0x5b8822(0x14b)] = _0x45ec7e[_0x5b8822(0x195)];
-                else
-                    _0x42d1cf[_0x5b8822(0xf2)](_0x45ec7e[_0x5b8822(0x17a)]) ? (_0x1b278e[_0x5b8822(0x14b)] = _0x45ec7e[_0x5b8822(0x185)], _0xd3d8a4[_0x5b8822(0x14b)] = _0x45ec7e[_0x5b8822(0x198)]) : (_0x1b278e[_0x5b8822(0x14b)] = _0x45ec7e[_0x5b8822(0x199)], _0xd3d8a4[_0x5b8822(0x14b)] = _0x45ec7e[_0x5b8822(0x143)]);
-            }
-            continue;
-        case '3':
-            _0x45ec7e[_0x5b8822(0xfc)](updateImage, _0x1b278e);
-            continue;
-        case '4':
-            var _0xd3d8a4 = document[_0x5b8822(0xff) + _0x5b8822(0x151)](_0x45ec7e[_0x5b8822(0xec)]);
-            continue;
-        case '5':
-            _0x45ec7e[_0x5b8822(0x173)](updateImage, _0xd3d8a4);
-            continue;
+
+
+function updatePageLink() {
+    const releaseYearMonth = formatReleaseDate(document.getElementById('release').value);
+    const title = normalizeTitle(document.getElementById('title').value); // Normaliza o título
+    const subdubValue = document.getElementById('subdub').value.toLowerCase(); // Transforma subdub em minúsculas
+
+    // Adiciona '-dublado' ao pageLink apenas se subdub for 'Dublado'
+    const subdubLink = subdubValue === 'dublado' ? '-dublado' : '';
+    document.getElementById('pageLink').value = `${releaseYearMonth}${title}${subdubLink}`.trim();
+}
+
+
+    // Banner adicojnar
+    document.getElementById("bannerSelect").addEventListener("change", function() {
+        const bannerInput = document.getElementById("banner");
+        if (this.value === "sim") {
+            bannerInput.value = "Banner,";
+        } else {
+            bannerInput.value = "";
         }
-        break;
+    });
+
+
+
+    // copiar code
+    function copiarTexto() {
+        const texto = document.getElementById("exibir-pre").innerText;
+        navigator.clipboard.writeText(texto)
+            .then(() => {
+                alert("Texto copiado com sucesso!");
+            })
+            .catch(err => {
+                console.error("Erro ao copiar o texto: ", err);
+            });
+    }
+
+
+    // Função chamada ao clicar em uma imagem
+    function selectImage(imgElement, inputId) {
+        // Atribui o src da imagem selecionada ao input correspondente
+        const inputField = document.getElementById(inputId);
+        inputField.value = imgElement.src;
+
+        // Atualiza a imagem de visualização na âncora
+        const previewImage = inputField.closest('.input-group').querySelector('.imagePreview');
+        previewImage.src = imgElement.src;
+
+        // Atualiza o link da imagem associada
+        const linkElement = previewImage.parentElement;
+        linkElement.href = imgElement.src;
+
+        // Atualiza a imagem
+        updateImage(inputField);
+    }
+
+    // Função para atualizar a imagem
+    function updateImage(input) {
+        const imageUrl = input.value; // Pega o valor do input
+        const imageElement = input.closest('.input-group').querySelector('.imagePreview'); // Encontra a imagem associada
+        const linkElement = imageElement.parentElement;
+
+        if (imageUrl) {
+            imageElement.src = imageUrl; // Atualiza o src da imagem
+            imageElement.style.display = 'flex'; // Exibe a imagem
+            linkElement.href = imageUrl; // Atualiza o link da imagem
+        } else {
+            imageElement.style.display = 'none'; // Oculta a imagem
+            linkElement.removeAttribute('href'); // Remove o link da imagem
+        }
+    }
+
+
+window.addEventListener('load', () => {
+    const inputs = document.querySelectorAll('.linkcapa'); // Seleciona todos os inputs com a classe linkcapa
+    inputs.forEach(input => {
+        const imageElement = input.closest('.input-group').querySelector('.imagePreview'); // Seleciona a imagem correspondente
+        const imageUrl = input.value; // Pega o valor do input
+        if (imageUrl) {
+            imageElement.src = imageUrl;  // Atualiza o src da imagem
+            imageElement.style.display = 'flex'; // Exibe a imagem
+            imageElement.parentElement.href = imageUrl; // Atualiza o link da imagem
+        }
+    });
+});
+
+
+document.getElementById('release').addEventListener('input', updatePageLink);
+document.getElementById('title').addEventListener('input', updatePageLink);
+document.getElementById('subdub').addEventListener('change', updatePageLink);
+
+
+
+
+
+
+// GENEROS
+// Função para verificar categorias
+function checkCategories() {
+    const categoryInput = document.getElementById('selectedCategories');  // Pega o valor do input de categorias
+    const categoryValues = categoryInput.value.toLowerCase().split(',').map(val => val.trim()); // Separa os valores digitados no input
+
+    // Pega todos os labels dentro do container com id "categoria"
+    const categoryLabels = document.querySelectorAll('#categoria label');
+
+    categoryLabels.forEach(label => {
+        const checkbox = label.querySelector('input[type="checkbox"]'); // Pega o checkbox dentro do label
+        const checkboxValue = checkbox.value.toLowerCase(); // Valor do checkbox (em minúsculo para garantir a comparação correta)
+
+        // Verifica se o valor do checkbox está na lista de valores digitados
+        if (categoryValues.includes(checkboxValue)) {
+            label.classList.add('check');  // Adiciona a classe .check ao label
+            checkbox.checked = true; // Marca o checkbox
+        } else {
+            label.classList.remove('check');  // Remove a classe .check do label
+            checkbox.checked = false; // Desmarca o checkbox
+        }
+    });
+}
+
+// Função para atualizar categorias no campo de texto
+function updateCategories(event) {
+    const checkbox = event.target;
+    const categoryInput = document.getElementById('selectedCategories');
+    let currentValues = categoryInput.value ? categoryInput.value.split(',').map(val => val.trim()) : [];  // Verifica se o campo já possui valor
+
+    const checkboxValue = checkbox.value.trim();
+    const label = checkbox.closest('label');
+
+    if (checkbox.checked) {
+        // Se for o primeiro item, simplesmente coloca o valor
+        if (currentValues.length === 0) {
+            categoryInput.value = checkboxValue;
+        } else {
+            // Se já houver valores, adiciona o valor com vírgula
+            categoryInput.value = currentValues.join(', ') + ', ' + checkboxValue;
+        }
+        label.classList.add('check');
+    } else {
+        const index = currentValues.indexOf(checkboxValue);
+        if (index !== -1) {
+            currentValues.splice(index, 1);
+            categoryInput.value = currentValues.join(', ');
+        }
+        label.classList.remove('check');
     }
 }
-window[_0x3a6cb1(0x18e)] = updateInputImage;
-function verificaScriptValidaIP() {
-    const _0x14a641 = _0x3a6cb1, _0x2ad0f1 = {
-            'ehmWS': _0x14a641(0x18d) + _0x14a641(0x134) + _0x14a641(0x11e) + _0x14a641(0xb6),
-            'wUGRi': function (_0x414107, _0x28e2b4) {
-                return _0x414107 === _0x28e2b4;
-            },
-            'htOxR': _0x14a641(0x17d) + _0x14a641(0x159)
-        }, _0x3cd8fe = document[_0x14a641(0xf9) + _0x14a641(0x161)](_0x2ad0f1[_0x14a641(0xb1)]);
-    _0x2ad0f1[_0x14a641(0x188)](_0x3cd8fe[_0x14a641(0x183)], -0x6e1 * -0x5 + 0x590 * 0x5 + -0x3e35) && (window[_0x14a641(0x11c)][_0x14a641(0x130)] = _0x2ad0f1[_0x14a641(0x137)]);
+
+
+// Adiciona ouvinte de evento para monitorar mudanças nos checkboxes de categorias
+const categoryCheckboxes = document.querySelectorAll('#categoria input[type="checkbox"]');
+categoryCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', updateCategories); // Detecta quando o checkbox de categorias for alterado
+});
+
+// Adiciona ouvinte de evento para monitorar mudanças no input de categorias
+document.getElementById('selectedCategories').addEventListener('input', checkCategories);
+
+// Função para verificar gêneros
+function checkGenres() {
+    const genreInput = document.getElementById('genres');  // Pega o valor do input de gêneros
+    const genreValues = genreInput.value.toLowerCase().split(',').map(val => val.trim()); // Separa os valores digitados no input
+
+    // Pega todos os labels dentro do container com id "genero"
+    const genreLabels = document.querySelectorAll('#genero label');
+
+    genreLabels.forEach(label => {
+        const checkbox = label.querySelector('input[type="checkbox"]'); // Pega o checkbox dentro do label
+        const checkboxValue = checkbox.value.toLowerCase(); // Valor do checkbox (em minúsculo para garantir a comparação correta)
+
+        // Verifica se o valor do checkbox está na lista de valores digitados
+        if (genreValues.includes(checkboxValue)) {
+            label.classList.add('check');  // Adiciona a classe .check ao label
+            checkbox.checked = true; // Marca o checkbox
+        } else {
+            label.classList.remove('check');  // Remove a classe .check do label
+            checkbox.checked = false; // Desmarca o checkbox
+        }
+    });
 }
-verificaScriptValidaIP();
+
+// Função para atualizar gêneros no campo de texto
+function updateGenres(event) {
+    const checkbox = event.target; // O checkbox que foi clicado
+    const genreInput = document.getElementById('genres');  // Pega o input de gêneros
+    let currentValues = genreInput.value.split(',').map(val => val.trim()); // Pega os valores atuais no input
+
+    const checkboxValue = checkbox.value.trim();
+    const label = checkbox.closest('label');  // Valor do checkbox
+
+    if (checkbox.checked) {
+        // Se o checkbox for marcado e o valor não estiver no input, adiciona
+        if (!currentValues.includes(checkboxValue)) {
+            currentValues.push(checkboxValue); // Adiciona o valor ao array
+            genreInput.value = currentValues.join(', ');  // Atualiza o input com os novos valores
+        }
+        label.classList.add('check');
+    } else {
+        // Se o checkbox for desmarcado, remove o valor
+        const index = currentValues.indexOf(checkboxValue);
+        if (index !== -1) {
+            currentValues.splice(index, 1); // Remove o valor
+            genreInput.value = currentValues.join(', ');  // Atualiza o input com os novos valores
+        }
+        label.classList.remove('check');
+    }
+}
+
+// Adiciona ouvinte de evento para monitorar mudanças nos checkboxes de gêneros
+const genreCheckboxes = document.querySelectorAll('#genero input[type="checkbox"]');
+genreCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', updateGenres); // Detecta quando o checkbox de gêneros for alterado
+});
+
+// Adiciona ouvinte de evento para monitorar mudanças no input de gêneros
+document.getElementById('genres').addEventListener('input', checkGenres);
+
+
+
+
+window.addEventListener('load', () => {
+    checkCategories(); // Atualiza categorias
+    checkGenres(); 
+   
+});
+
+
+
+
+
+
+
+    
