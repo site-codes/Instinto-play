@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuário</title>
+    <style>
+        /* Resetando margens e padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Corpo da página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Container principal */
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Estilo dos campos de entrada */
+        label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="text"], input[type="hidden"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Botão de registro */
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Mensagens de erro */
+        .error {
+            color: #e74c3c;
+            background-color: #f8d7da;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        /* Dados cadastrados */
+/* Estilo dos dados do usuário */
+.user-data {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e9f7ef;
+    border: 1px solid #d4edda;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word; /* Garante que o texto quebre linhas se necessário */
+    word-break: break-word; /* Previne que o texto transborde */
+    overflow-wrap: break-word; /* Garante a quebra das palavras longas */
+}
+
+
+        .user-data p {
+            font-size: 14px;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        .user-data h3 {
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+
+        /* Botão do WhatsApp */
+        .whatsapp-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .whatsapp-button a {
+            background-color: #25d366;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .whatsapp-button a:hover {
+            background-color: #128c7e;
+        }
+
+        /* Responsividade */
+        @media (max-width: 500px) {
+            .container {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            input[type="text"], input[type="hidden"], button {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+        </style>
+    
+    <body>
+        <div class="container">
+            <h2>REGISTRO</h2>
+            <label for="name">Nome:</label>
+            <input type="text" id="name" placeholder="Digite seu nome">
+
+            <input type="hidden" id="ip" placeholder="IP Atual" readonly>
+    
+            <label for="domain">Dominio:</label>
+            <input type="text" id="domain" placeholder="Digite seu domínio (https://.../)">
+    
+            <label for="bloggerId">ID do Blogger:</label>
+            <input type="text" id="bloggerId" placeholder="Link do Blogger (https://draft.blogger.com/u/1/blog/posts/ID_BLOGGER)">
+        
+            <input type="hidden" id="hash" readonly>
+
+            <button onclick="registerUser()">Registrar</button>
+    
+            <div class="error" id="errorMessage"></div>
+            <div class="user-data" id="userData"></div>
+            <div class="whatsapp-button" id="whatsappButton"></div>
+
+        </div>
+    </body>
+    
+<script>
+    // Função para capturar o IP atual usando uma API pública
+    async function fetchCurrentIP() {
+        try {
+            const response = await fetch('https://api.ipify.org?format=json');
+            const data = await response.json();
+            document.getElementById('ip').value = data.ip;
+        } catch (error) {
+            console.error("Erro ao capturar o IP:", error);
+        }
+    }
+
+    fetchCurrentIP();
+
+    // Função para validar o link do blogger e o domínio
+    function validateFields(domain, bloggerId) {
+        const domainPattern = /^https:\/\/.*\/$/;
+        const bloggerPattern = /^https:\/\/draft\.blogger\.com\/u\/1\/blog\/posts\/(\d+)$/;
+        const errorMessageDiv = document.getElementById('errorMessage');
+        errorMessageDiv.textContent = '';
+
+        if (!domainPattern.test(domain)) {
+            errorMessageDiv.textContent = "O domínio deve começar com 'https://' e terminar com '/'.";
+            return false;
+        }
+
+        const match = bloggerId.match(bloggerPattern);
+        if (!match) {
+            errorMessageDiv.textContent = "O link do Blogger deve estar no formato: https://draft.blogger.com/u/1/blog/posts/ID_BLOGGER";
+            return false;
+        }
+
+        return match[1]; // Retorna apenas o ID do Blogger
+    }
+
+    // Função para gerar SHA-256
+    async function generateSHA256(input) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(input);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        document.getElementById('hash').value = hashHex;
+        return hashHex;
+    }
+
+    // Função para registrar o usuário
+    async function registerUser() {
+        const name = document.getElementById('name').value;
+        const ip = document.getElementById('ip').value;
+        const domain = document.getElementById('domain').value;
+        const bloggerId = document.getElementById('bloggerId').value;
+        const errorMessageDiv = document.getElementById('errorMessage');
+        errorMessageDiv.textContent = '';
+
+        // Verifica se todos os campos foram preenchidos
+        if (!name || !ip || !domain || !bloggerId) {
+            errorMessageDiv.textContent = "Por favor, preencha todos os campos.";
+            return;
+        }
+
+        // Valida o domínio e o link do Blogger
+        const bloggerIdNumber = validateFields(domain, bloggerId);
+        if (!bloggerIdNumber) {
+            return;
+        }
+
+        // Gera SHA-256 com base nos valores
+        const concatenatedInput = `${name}${ip}${domain}${bloggerIdNumber}`;
+        const token = await generateSHA256(concatenatedInput);
+
+        // Exibe os dados cadastrados
+        const userDataDiv = document.getElementById('userData');
+        userDataDiv.style.display = "flex";
+        userDataDiv.innerHTML = `
+            <h3>Dados Cadastrados:</h3>
+            <p><strong>Nome:</strong> ${name}</p></br>
+            <p><strong>IP Atual:</strong> ${ip}</p></br>
+            <p><strong>Domain:</strong> ${domain}</p></br>
+            <p><strong>ID do Blogger:</strong> ${bloggerIdNumber}</p></br>
+            <p><strong>Token:</strong> ${token}</p>
+        `;
+
+        // Dados em JSON
+        const jsonData = 
+        {
+            nome: name,
+            ip: ip,
+            domain: domain,
+            idBlogger: bloggerIdNumber,
+            token: token
+        };
+
+        // Gera link para compartilhar no WhatsApp
+        const message = `
+*${name} - REGISTRADO!!*
+-- Nome: ${name}
+-- IP Atual: ${ip}
+-- Dominio: ${domain}
+-- ID do Blogger: ${bloggerIdNumber}
+-- Token: ${token}
+        
+${JSON.stringify(jsonData, null, 2)}`;
+
+        const whatsappLink = `https://wa.me/?text=${encodeURIComponent(message)}`;
+
+        const whatsappButtonDiv = document.getElementById('whatsappButton');
+        whatsappButtonDiv.innerHTML = `<a href="${whatsappLink}" target="_blank">Compartilhar no WhatsApp</a>`;
+    }
+</script>
+
+</body>
+</html>

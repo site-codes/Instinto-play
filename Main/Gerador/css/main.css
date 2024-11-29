@@ -1,0 +1,84 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Pathway+Extreme:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Pathway Extreme', sans-serif; /* Altere para uma fonte mais bonita, se preferir */
+}
+
+body {
+    background: #0c0a20; 
+    color: #ffffff; 
+    padding: 20px;
+}
+.logo{
+    align-items: center;
+    display: flex;
+    gap:20px;
+}
+#logo{
+    width:40px;
+    height:40px;
+    border-radius:50px;
+}
+
+@media screen and (max-width:800px){
+    body{
+        padding:0px
+    }
+
+}
+
+header {
+    background:#121026 ; 
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: position 1s ease, left 1s ease;
+}
+
+header.scroll{
+    position: fixed;
+    top:0px;
+    left:0px;
+    right:0px;
+    border-radius:0;
+    z-index:10
+
+}
+
+header h1 {
+    font-size: 24px;
+    color: #ff4081; /* Cor de destaque */
+}
+
+
+main {
+    background: #121026;
+    border-radius:10px
+}
+
+
+footer {
+    margin-top: 20px;
+    text-align: center;
+    padding: 15px;
+    background-color: #121026;
+    border-radius: 10px;
+}
+
+footer p {
+    font-size: 14px;
+    color: #ffffff;
+    opacity:0.6
+}
+
+a{
+    text-decoration: none;
+    color:unset;
+}

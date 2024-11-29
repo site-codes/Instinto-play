@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=keyboard_backspace" />
+</head>
+<body>
+    
+    <img id="banner" src="imgs/banner.jpg">
+    <header style="margin-bottom:20px">
+        <div class="logo">
+            <img id="logo" src="imgs/logo.jpg" alt="">
+            <h2>Gerador Instinto Animes</h2>
+        </div>
+        <input type="text" id="search" placeholder="Pesquise filmes ou séries...">
+    </header>
+
+    <main>
+        <div id="access-granted">Acesso permitido! Bem-vindo à plataforma.</div>
+        <div id="access-denied" style="display: none;">Acesso negado. Seu IP não está autorizado.</div>
+
+        <div id="movies" class="list">
+            <h2>Filmes <span id="total-movies" style="display:none">Total: 0</span></h2>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h6 id="current-movie-page">Página 1 de 0</h6>
+                <div>
+                    <button id="load-prev-movies" disabled data-button="Página Anterior"></button>
+                    <button id="load-more-movies" disabled data-button="Próxima Página"></button>
+                </div>
+            </div>
+            <div class="results" id="movie-results"></div>
+        </div>
+
+        <div id="tv-shows" class="list">
+            <h2>Séries <span id="total-tv" style="display:none">Total: 0</span></h2>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h6 id="current-tv-page">Página 1 de 0</h6>
+                <div>
+                    <button id="load-prev-tv" disabled data-button="Página Anterior"></button>
+                    <button id="load-more-tv" disabled data-button="Próxima Página"></button>
+                </div>
+            </div>
+            <div class="results" id="tv-results"></div>
+        </div>
+    </main>
+
+    <footer>
+        <h8 style="opacity:0.8">Esse gerador foi criado apenas com o intuito de gerar códigos de postagens para seu site blogger com o template 'Instinto Play V2'<h8>
+        <p style="margin-top:20px">&copy; 2024 Instinto Animes. Todos os direitos reservados.</p>
+    </footer>
+    <script src="js/script.js"></script>
+    <script src="js/scroll.js"></script>
+</body>
+</html>
