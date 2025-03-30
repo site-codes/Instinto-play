@@ -1,3 +1,58 @@
+    // Função para verificar se o domínio da página atual corresponde a algum domínio no JSON
+    function verificarDominioPagina(jsonUrl, urlRedirecionamento) {
+        // Obtém a URL completa da página atual
+        const urlAtual = window.location.href; // Ex.: "https://fgrtyhnccb.blogspot.com/p/autopost.html"
+
+        // Faz uma requisição fetch para obter o JSON
+        fetch(jsonUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro ao carregar o JSON: ${response.status}`);
+                }
+                return response.json(); // Converte a resposta para JSON
+            })
+            .then(data => {
+                // Itera sobre os usuários no JSON
+                for (const usuario of data) {
+                    // Verifica se o usuário tem a propriedade "domains" e se é um array
+                    if (Array.isArray(usuario.domains)) {
+                        // Verifica se algum dos domínios na lista está contido na URL atual
+                        const dominioEncontrado = usuario.domains.some(domain => urlAtual.includes(domain));
+                        if (dominioEncontrado) {
+                            console.log("Domínio encontrado:", urlAtual); // Log de sucesso
+                            console.log("O site está cadastrado no JSON."); // Mensagem de depuração
+                            return true; // Encerra a função retornando true
+                        }
+                    } else if (usuario.domain && urlAtual.includes(usuario.domain)) {
+                        // Caso o usuário tenha apenas um domínio (não em formato de array)
+                        console.log("Domínio encontrado:", urlAtual); // Log de sucesso
+                        console.log("O site está cadastrado no JSON."); // Mensagem de depuração
+                        return true; // Encerra a função retornando true
+                    }
+                }
+
+                // Se nenhum domínio correspondente for encontrado, exibe uma mensagem e redireciona
+                console.log("Domínio não encontrado:", urlAtual); // Log de falha
+                console.log("O site NÃO está cadastrado no JSON."); // Mensagem de depuração
+                alert("O domínio atual não está cadastrado!"); // Mensagem de alerta
+                window.location.href = urlRedirecionamento; // Redireciona para outra página
+                return false;
+            })
+            .catch(error => {
+                console.error("Erro durante a verificação:", error);
+            });
+    }
+
+    // Exemplo de uso
+    const jsonUrl = "https://template-ecru-beta.vercel.app/users.json"; // URL do JSON
+    const urlRedirecionamento = "https://instintoanimes.blogspot.com/"; // URL para redirecionamento
+
+    verificarDominioPagina(jsonUrl, urlRedirecionamento);
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // SE O DOMINIO ATUAL NÃO CORRESPONDER AO DOMINIO CADASTRADO ENTÃO REDIRECIONA A URL
+
+
 (function (_0x4eeebd, _0x45592a) {
     const _0x4e12b1 = _0x28c6, _0x234622 = _0x4eeebd();
     while (!![]) {
